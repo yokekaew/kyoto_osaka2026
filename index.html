@@ -17,7 +17,8 @@ a{color:#A8382B}a:hover{color:#7E2519}
 .hand{font-family:'Sriracha','IBM Plex Sans Thai',cursive}
 .sticker{display:inline-block;font-family:'Sriracha',cursive;font-size:15px;color:#4A2C21;border:1.5px solid #4A2C21;border-radius:10px;padding:2px 10px}
 .hl{background:#E6DAF0;color:#4E3168;padding:1px 6px}
-.tabs{position:sticky;top:0;z-index:5;background:#4A2C21;display:flex;gap:4px;padding:6px 8px;overflow-x:auto}
+.stickybar{position:sticky;top:0;z-index:5;box-shadow:0 2px 6px rgba(74,44,33,.12)}
+.tabs{background:#4A2C21;display:flex;gap:4px;padding:6px 8px;overflow-x:auto}
 .tab{flex:1 0 auto;min-height:44px;padding:0 12px;border:0;border-radius:999px;background:transparent;color:#EADFCB;font-family:'DM Mono','IBM Plex Sans Thai',monospace;font-size:13px;font-weight:500;letter-spacing:.04em;cursor:pointer}
 .tab.on{background:#FBF7EA;color:#4A2C21}
 .chips{display:flex;gap:6px;overflow-x:auto;padding:12px;background:#FBF4E4;border-bottom:1.5px solid #4A2C21}
@@ -59,13 +60,14 @@ a{color:#A8382B}a:hover{color:#7E2519}
 .prepbox{background:#D4EBDC;border-color:#4A2C21;color:#3B2418}
 .prepbox h3{color:#4A2C21}
 .prepbox ul{color:#3B2418}
-.dayhead{padding:20px 14px 4px;display:flex;flex-direction:column;gap:6px;align-items:flex-start}
+.dayhead{scroll-margin-top:140px;padding:20px 14px 4px;display:flex;flex-direction:column;gap:6px;align-items:flex-start}
 .dayhead .code{font-family:'DM Mono','IBM Plex Sans Thai',monospace;font-size:12px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;border:1.5px solid #4A2C21;border-radius:8px;transform:rotate(-2deg);background:#E6DAF0;color:#4E3168;padding:2px 8px}
 .dayhead h2{margin:0;font-family:'Sriracha','IBM Plex Sans Thai',cursive;font-size:28px;font-weight:400;line-height:1.15;color:#4A2C21}
 .total{display:flex;justify-content:space-between;align-items:baseline;gap:8px;background:#4A2C21;color:#FBF7EA;border-radius:20px;border:0;padding:14px 16px}
 .total b{font-family:'Sriracha',cursive;font-size:24px;font-weight:400}
 .total span{font-size:12.5px;color:#EADFCB}
 .navrow{display:flex;gap:8px}
+.navbtn:disabled{opacity:.4;cursor:default}
 .navbtn{flex:1;min-height:48px;border-radius:999px;border:1.5px solid #4A2C21;background:#FFFDF6;font-family:'DM Mono','IBM Plex Sans Thai',monospace;font-size:13px;font-weight:500;color:#4A2C21;cursor:pointer}
 .kv{display:grid;grid-template-columns:96px minmax(0,1fr);gap:4px 10px;font-size:14px;line-height:1.55}
 .kv dt{color:#6B5446;font-family:'DM Mono','IBM Plex Sans Thai',monospace;font-size:12.5px}
@@ -76,6 +78,21 @@ a{color:#A8382B}a:hover{color:#7E2519}
 .tbl th{font-family:'DM Mono','IBM Plex Sans Thai',monospace;font-weight:500;color:#6B5446;font-size:12px}
 .num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
 .legend{display:flex;flex-wrap:wrap;gap:4px}
+.hdr{position:relative;overflow:hidden}
+.spark{position:absolute;pointer-events:none;animation:drift 5s ease-in-out infinite}
+@keyframes drift{0%,100%{translate:0 0}50%{translate:0 -5px}}
+.decoline{display:flex;justify-content:center;align-items:center;gap:10px;padding:2px 0}
+@media (prefers-reduced-motion:reduce){.spark{animation:none!important}}
+.cuterow{display:flex;align-items:flex-end;justify-content:center;gap:4px;margin:4px 0 2px}
+.cute{flex:none}
+.cute.c1,.cute.c3{animation:bob 3.2s ease-in-out infinite}
+.cute.c2,.cute.c5{animation:bob 3.2s ease-in-out .8s infinite}
+.cute.c4{animation:bob 3.2s ease-in-out 1.6s infinite}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+@media (prefers-reduced-motion:reduce){.cute{animation:none!important}}
+.prepbox{position:relative;margin-top:14px}
+.peek{position:absolute;top:-30px;right:16px}
+.footcute{display:flex;justify-content:center;gap:6px;margin-bottom:6px}
 </style>
 
 </head>
@@ -86,40 +103,47 @@ a{color:#A8382B}a:hover{color:#7E2519}
 
 <header style="display: flex; flex-direction: column">
 <div class="mono" style="background: #4A2C21; color: #FBF7EA; font-size: 11px; padding: 8px 16px; text-align: center">4–12 DEC 2026 · KYOTO → OSAKA · 5 PEOPLE</div>
-<div style="background: #D4EBDC; padding: 22px 18px 22px; display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center; border-bottom: 1.5px solid #4A2C21">
+<div class="hdr" style="background: #D4EBDC; padding: 22px 18px 22px; display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center; border-bottom: 1.5px solid #4A2C21">
 <div style="display: flex; gap: 8px; justify-content: center; flex-wrap: wrap">
 <span class="sticker" style="background: #F6C9D6; transform: rotate(-6deg)">gacha</span>
 <span class="sticker" style="background: #F8E7A6; transform: rotate(4deg)">street food</span>
 <span class="sticker" style="background: #C9DDEB; transform: rotate(-3deg)">nature</span>
 </div>
-<div class="mono" style="font-size: 11.5px; color: #4A2C21; margin-top: 8px">WELCOME TO THE WORLD OF…</div>
+<svg class="spark" style="left: 4%; top: 12%; transform: rotate(-12deg); animation-delay: 0s" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 L14.6 8.8 L22 9.3 L16.3 14 L18.2 21.2 L12 17.2 L5.8 21.2 L7.7 14 L2 9.3 L9.4 8.8 Z" fill="#F8E7A6" stroke="#4A2C21" stroke-width="1.6" stroke-linejoin="round"></path></svg><svg class="spark" style="left: 12%; top: 4%; transform: rotate(0deg); animation-delay: 1s" width="10" height="10" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8" fill="#F6C9D6" stroke="#4A2C21" stroke-width="1.6"></circle></svg><svg class="spark" style="left: 91%; top: 4%; transform: rotate(15deg); animation-delay: 0.5s" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 12 C8 9 5 6 7.5 3.6 C9.3 2 11.2 3 12 4.6 C12.8 3 14.7 2 16.5 3.6 C19 6 16 9 12 12 Z" transform="rotate(0 12 12)" fill="#9CC97F" stroke="#4A2C21" stroke-width="1.3" stroke-linejoin="round"></path><path d="M12 12 C8 9 5 6 7.5 3.6 C9.3 2 11.2 3 12 4.6 C12.8 3 14.7 2 16.5 3.6 C19 6 16 9 12 12 Z" transform="rotate(90 12 12)" fill="#9CC97F" stroke="#4A2C21" stroke-width="1.3" stroke-linejoin="round"></path><path d="M12 12 C8 9 5 6 7.5 3.6 C9.3 2 11.2 3 12 4.6 C12.8 3 14.7 2 16.5 3.6 C19 6 16 9 12 12 Z" transform="rotate(180 12 12)" fill="#9CC97F" stroke="#4A2C21" stroke-width="1.3" stroke-linejoin="round"></path><path d="M12 12 C8 9 5 6 7.5 3.6 C9.3 2 11.2 3 12 4.6 C12.8 3 14.7 2 16.5 3.6 C19 6 16 9 12 12 Z" transform="rotate(270 12 12)" fill="#9CC97F" stroke="#4A2C21" stroke-width="1.3" stroke-linejoin="round"></path><circle cx="12" cy="12" r="1.4" fill="#4A2C21"></circle></svg><svg class="spark" style="left: 84%; top: 16%; transform: rotate(10deg); animation-delay: 1.5s" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 L14.6 8.8 L22 9.3 L16.3 14 L18.2 21.2 L12 17.2 L5.8 21.2 L7.7 14 L2 9.3 L9.4 8.8 Z" fill="#F6C9D6" stroke="#4A2C21" stroke-width="1.6" stroke-linejoin="round"></path></svg><svg class="spark" style="left: 3%; top: 36%; transform: rotate(0deg); animation-delay: 2s" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#C9DDEB" stroke="#4A2C21" stroke-width="1.6"></circle><circle cx="12" cy="12" r="7" fill="none" stroke="#4A2C21" stroke-width="1" opacity=".45"></circle><circle cx="9.6" cy="9.6" r="1.3" fill="#4A2C21"></circle><circle cx="14.4" cy="9.6" r="1.3" fill="#4A2C21"></circle><circle cx="9.6" cy="14.4" r="1.3" fill="#4A2C21"></circle><circle cx="14.4" cy="14.4" r="1.3" fill="#4A2C21"></circle></svg><svg class="spark" style="left: 93%; top: 34%; transform: rotate(0deg); animation-delay: 0.7s" width="11" height="11" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8" fill="#F8E7A6" stroke="#4A2C21" stroke-width="1.6"></circle></svg><svg class="spark" style="left: 2%; top: 62%; transform: rotate(-20deg); animation-delay: 1.2s" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 12 C8 9 5 6 7.5 3.6 C9.3 2 11.2 3 12 4.6 C12.8 3 14.7 2 16.5 3.6 C19 6 16 9 12 12 Z" transform="rotate(0 12 12)" fill="#9CC97F" stroke="#4A2C21" stroke-width="1.3" stroke-linejoin="round"></path><path d="M12 12 C8 9 5 6 7.5 3.6 C9.3 2 11.2 3 12 4.6 C12.8 3 14.7 2 16.5 3.6 C19 6 16 9 12 12 Z" transform="rotate(90 12 12)" fill="#9CC97F" stroke="#4A2C21" stroke-width="1.3" stroke-linejoin="round"></path><path d="M12 12 C8 9 5 6 7.5 3.6 C9.3 2 11.2 3 12 4.6 C12.8 3 14.7 2 16.5 3.6 C19 6 16 9 12 12 Z" transform="rotate(180 12 12)" fill="#9CC97F" stroke="#4A2C21" stroke-width="1.3" stroke-linejoin="round"></path><path d="M12 12 C8 9 5 6 7.5 3.6 C9.3 2 11.2 3 12 4.6 C12.8 3 14.7 2 16.5 3.6 C19 6 16 9 12 12 Z" transform="rotate(270 12 12)" fill="#9CC97F" stroke="#4A2C21" stroke-width="1.3" stroke-linejoin="round"></path><circle cx="12" cy="12" r="1.4" fill="#4A2C21"></circle></svg><svg class="spark" style="left: 92%; top: 58%; transform: rotate(-6deg); animation-delay: 0.3s" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 L14.6 8.8 L22 9.3 L16.3 14 L18.2 21.2 L12 17.2 L5.8 21.2 L7.7 14 L2 9.3 L9.4 8.8 Z" fill="#FFFDF6" stroke="#4A2C21" stroke-width="1.6" stroke-linejoin="round"></path></svg><svg class="spark" style="left: 90%; top: 76%; transform: rotate(0deg); animation-delay: 1.8s" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#F6C9D6" stroke="#4A2C21" stroke-width="1.6"></circle><circle cx="12" cy="12" r="7" fill="none" stroke="#4A2C21" stroke-width="1" opacity=".45"></circle><circle cx="9.6" cy="9.6" r="1.3" fill="#4A2C21"></circle><circle cx="14.4" cy="9.6" r="1.3" fill="#4A2C21"></circle><circle cx="9.6" cy="14.4" r="1.3" fill="#4A2C21"></circle><circle cx="14.4" cy="14.4" r="1.3" fill="#4A2C21"></circle></svg><svg class="spark" style="left: 6%; top: 80%; transform: rotate(0deg); animation-delay: 2.4s" width="9" height="9" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8" fill="#C9DDEB" stroke="#4A2C21" stroke-width="1.6"></circle></svg>
+<div class="cuterow" aria-hidden="true"><svg class="cute c2" width="58" height="92" viewBox="0 0 70 112" aria-hidden="true"><path d="M50 58 L62 4" stroke="#4A2C21" stroke-width="7" stroke-linecap="round"></path><path d="M50 58 L62 4" stroke="#F6A5B5" stroke-width="3.5" stroke-linecap="round"></path><path d="M16 40 L22 88 Q35 93 48 88 L54 40 Z" fill="#A8DDB5" stroke="#4A2C21" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"></path><circle cx="24" cy="78" r="2.4" fill="#fff"></circle><circle cx="44" cy="70" r="2" fill="#fff"></circle><circle cx="27" cy="54" r="1.6" fill="#fff"></circle><rect x="32" y="89" width="6" height="10" fill="#FFFDF6" stroke="#4A2C21" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"></rect><ellipse cx="35" cy="101" rx="14" ry="4" fill="#FFFDF6" stroke="#4A2C21" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"></ellipse><path d="M13 43 Q12 22 35 22 Q58 22 57 43 Q51 47 46 42 Q41 48 35 42 Q29 48 24 42 Q18 47 13 43 Z" fill="#FFFDF6" stroke="#4A2C21" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"></path><path d="M35 11.5 Q37 4.5 43 2.5" fill="none" stroke="#4A2C21" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"></path><circle cx="35" cy="17" r="5.5" fill="#E2434B" stroke="#4A2C21" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></circle><circle cx="33.4" cy="15.4" r="1.3" fill="#fff"></circle><circle cx="29" cy="64" r="2.1" fill="#4A2C21"></circle><circle cx="41" cy="64" r="2.1" fill="#4A2C21"></circle><path d="M32 68 Q33.5 70.5 35 68 Q36.5 70.5 38 68" fill="none" stroke="#4A2C21" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"></path><ellipse cx="25" cy="68" rx="3" ry="1.8" fill="#F6A5B5"></ellipse><ellipse cx="45" cy="68" rx="3" ry="1.8" fill="#F6A5B5"></ellipse></svg><svg class="cute c5" width="54" height="86" viewBox="0 0 70 112" aria-hidden="true"><path d="M20 52 L35 106 L50 52 Z" fill="#E9B872" stroke="#4A2C21" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"></path><path d="M24 60 L42 82 M30 56 L46 74 M46 60 L28 82 M40 56 L24 74" stroke="#B9824A" stroke-width="1.6"></path><path d="M16 26 L18 8 L28 18 Q35 15 42 18 L52 8 L54 26 Q60 34 58 44 Q56 56 35 56 Q14 56 12 44 Q10 34 16 26 Z" fill="#F6C9D6" stroke="#4A2C21" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"></path><path d="M14 48 Q20 56 24 50 Q28 58 33 51 Q38 59 42 51 Q47 57 52 49" fill="none" stroke="#4A2C21" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></path><circle cx="28" cy="36" r="2.1" fill="#4A2C21"></circle><circle cx="42" cy="36" r="2.1" fill="#4A2C21"></circle><path d="M32 40 Q33.5 42.5 35 40 Q36.5 42.5 38 40" fill="none" stroke="#4A2C21" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"></path><ellipse cx="24" cy="40" rx="3" ry="1.8" fill="#F6A5B5"></ellipse><ellipse cx="46" cy="40" rx="3" ry="1.8" fill="#F6A5B5"></ellipse><circle cx="22" cy="10" r="0" fill="none"></circle></svg><svg class="cute c1" width="70" height="80" viewBox="0 0 80 92" aria-hidden="true"><ellipse cx="40" cy="82" rx="34" ry="7" fill="#C9DDEB" stroke="#4A2C21" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"></ellipse><path d="M16 78 L22 36 Q40 30 58 36 L64 78 Q40 85 16 78 Z" fill="#FBE39A" stroke="#4A2C21" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"></path><path d="M22 36 Q40 30 58 36 L57 46 Q52 51 47 45 Q41 52 35 46 Q29 51 23 46 Z" fill="#9B5B2E" stroke="#4A2C21" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"></path><path d="M30 33 Q29 21 40 21 Q51 21 50 33 Q45 36 40 33 Q35 36 30 33 Z" fill="#FFFDF6" stroke="#4A2C21" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"></path><path d="M40 12 Q42 5 48 3" fill="none" stroke="#4A2C21" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"></path><circle cx="40" cy="17" r="5" fill="#E2434B" stroke="#4A2C21" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></circle><circle cx="38.4" cy="15.4" r="1.3" fill="#fff"></circle><circle cx="33" cy="62" r="2.1" fill="#4A2C21"></circle><circle cx="47" cy="62" r="2.1" fill="#4A2C21"></circle><path d="M37 66 Q38.5 68.5 40 66 Q41.5 68.5 43 66" fill="none" stroke="#4A2C21" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"></path><ellipse cx="29" cy="66" rx="3" ry="1.8" fill="#F6A5B5"></ellipse><ellipse cx="51" cy="66" rx="3" ry="1.8" fill="#F6A5B5"></ellipse></svg><svg class="cute c4" width="62" height="66" viewBox="0 0 80 84" aria-hidden="true"><path d="M30 18 Q26 10 31 4 M42 18 Q38 10 43 4 M54 18 Q50 10 55 4" fill="none" stroke="#4A2C21" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" opacity=".55"></path><path d="M64 40 Q78 40 76 54 Q74 64 61 62" fill="none" stroke="#4A2C21" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"></path><path d="M12 30 L18 72 Q40 80 62 72 L68 30 Z" fill="#FFFDF6" stroke="#4A2C21" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"></path><ellipse cx="40" cy="30" rx="28" ry="8" fill="#9CC97F" stroke="#4A2C21" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"></ellipse><path d="M40 33 Q34 27 37 25 Q39 24 40 26 Q41 24 43 25 Q46 27 40 33 Z" fill="#fff"></path><path d="M16 46 Q40 52 64 46" fill="none" stroke="#9CC97F" stroke-width="3"></path><circle cx="32" cy="58" r="2.1" fill="#4A2C21"></circle><circle cx="48" cy="58" r="2.1" fill="#4A2C21"></circle><path d="M37 62 Q38.5 64.5 40 62 Q41.5 64.5 43 62" fill="none" stroke="#4A2C21" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"></path><ellipse cx="28" cy="62" rx="3" ry="1.8" fill="#F6A5B5"></ellipse><ellipse cx="52" cy="62" rx="3" ry="1.8" fill="#F6A5B5"></ellipse></svg><svg class="cute c3" width="84" height="72" viewBox="0 0 96 80" aria-hidden="true"><path d="M80 58 Q96 52 90 36" fill="none" stroke="#4A2C21" stroke-width="6" stroke-linecap="round"></path><path d="M80 58 Q96 52 90 36" fill="none" stroke="#FFFDF6" stroke-width="2.5" stroke-linecap="round"></path><path d="M14 56 Q12 32 22 26 L24 10 L36 22 Q48 18 60 22 L72 10 L74 26 Q84 32 82 56 Q80 74 48 74 Q16 74 14 56 Z" fill="#FFFDF6" stroke="#4A2C21" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"></path><path d="M24 11 L36 22 Q30 26 24 30 Z" fill="#E9A15E"></path><path d="M62 52 Q70 44 81 50 Q81 64 70 70 Q64 62 62 52 Z" fill="#8E8E93" opacity=".75"></path><path d="M14 56 Q12 32 22 26 L24 10 L36 22 Q48 18 60 22 L72 10 L74 26 Q84 32 82 56 Q80 74 48 74 Q16 74 14 56 Z" fill="none" stroke="#4A2C21" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"></path><circle cx="39" cy="42" r="2.1" fill="#4A2C21"></circle><circle cx="57" cy="42" r="2.1" fill="#4A2C21"></circle><path d="M45 46 Q46.5 48.5 48 46 Q49.5 48.5 51 46" fill="none" stroke="#4A2C21" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"></path><ellipse cx="35" cy="46" rx="3" ry="1.8" fill="#F6A5B5"></ellipse><ellipse cx="61" cy="46" rx="3" ry="1.8" fill="#F6A5B5"></ellipse><path d="M18 44 L8 42 M18 49 L8 51 M78 44 L88 42 M78 49 L88 51" stroke="#4A2C21" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"></path></svg></div>
+<div class="mono" style="font-size: 11.5px; color: #4A2C21; margin-top: 2px">WELCOME TO THE WORLD OF…</div>
 <h1 class="serif" style="margin: 0; font-size: 44px; font-weight: 400; line-height: 1.1; color: #4A2C21">ญี่ปุ่น Kansai</h1>
 <div class="script" style="font-size: 26px; line-height: 1">~ tiny treasures trip ~</div>
-<div class="mono hl" style="font-size: 11px; margin-top: 6px; border-radius: 6px">sanrio · sylvanian · secondhand finds</div>
+<div class="mono hl" style="font-size: 11px; margin-top: 6px; border-radius: 6px">momiji · matcha · cute finds</div>
 <div style="font-size: 12.5px; color: #3B2418; margin-top: 4px">{{statusLine}}</div>
 </div>
 </header>
 
+<div class="stickybar">
 <nav class="tabs" aria-label="หมวดข้อมูล">
 <sc-for list="{{tabs}}" as="t" hint-placeholder-count="4">
 <button type="button" class="tab {{t.cls}}" onClick="{{t.pick}}">{{t.label}}</button>
 </sc-for>
 </nav>
-
 <sc-if value="{{showDays}}" hint-placeholder-val="{{true}}">
 <div class="chips" role="tablist" aria-label="เลือกวัน">
 <sc-for list="{{chips}}" as="c" hint-placeholder-count="9">
 <button type="button" class="chip {{c.cls}}" onClick="{{c.pick}}"><b>{{c.code}}</b><span>{{c.sub}}</span></button>
 </sc-for>
 </div>
+</sc-if>
+</div>
 
-<div class="dayhead">
+<sc-if value="{{showDays}}" hint-placeholder-val="{{true}}">
+
+<div class="dayhead" style="position: relative"><svg class="spark" style="left: 82%; top: 18px; transform: rotate(10deg); animation-delay: 0s" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 12 C8 9 5 6 7.5 3.6 C9.3 2 11.2 3 12 4.6 C12.8 3 14.7 2 16.5 3.6 C19 6 16 9 12 12 Z" transform="rotate(0 12 12)" fill="#9CC97F" stroke="#4A2C21" stroke-width="1.3" stroke-linejoin="round"></path><path d="M12 12 C8 9 5 6 7.5 3.6 C9.3 2 11.2 3 12 4.6 C12.8 3 14.7 2 16.5 3.6 C19 6 16 9 12 12 Z" transform="rotate(90 12 12)" fill="#9CC97F" stroke="#4A2C21" stroke-width="1.3" stroke-linejoin="round"></path><path d="M12 12 C8 9 5 6 7.5 3.6 C9.3 2 11.2 3 12 4.6 C12.8 3 14.7 2 16.5 3.6 C19 6 16 9 12 12 Z" transform="rotate(180 12 12)" fill="#9CC97F" stroke="#4A2C21" stroke-width="1.3" stroke-linejoin="round"></path><path d="M12 12 C8 9 5 6 7.5 3.6 C9.3 2 11.2 3 12 4.6 C12.8 3 14.7 2 16.5 3.6 C19 6 16 9 12 12 Z" transform="rotate(270 12 12)" fill="#9CC97F" stroke="#4A2C21" stroke-width="1.3" stroke-linejoin="round"></path><circle cx="12" cy="12" r="1.4" fill="#4A2C21"></circle></svg><svg class="spark" style="left: 92%; top: 8px; transform: rotate(-10deg); animation-delay: 0.8s" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 L14.6 8.8 L22 9.3 L16.3 14 L18.2 21.2 L12 17.2 L5.8 21.2 L7.7 14 L2 9.3 L9.4 8.8 Z" fill="#F8E7A6" stroke="#4A2C21" stroke-width="1.6" stroke-linejoin="round"></path></svg><svg class="spark" style="left: 74%; top: 6px; transform: rotate(0deg); animation-delay: 1.6s" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#F6C9D6" stroke="#4A2C21" stroke-width="1.6"></circle><circle cx="12" cy="12" r="7" fill="none" stroke="#4A2C21" stroke-width="1" opacity=".45"></circle><circle cx="9.6" cy="9.6" r="1.3" fill="#4A2C21"></circle><circle cx="14.4" cy="9.6" r="1.3" fill="#4A2C21"></circle><circle cx="9.6" cy="14.4" r="1.3" fill="#4A2C21"></circle><circle cx="14.4" cy="14.4" r="1.3" fill="#4A2C21"></circle></svg><svg class="spark" style="left: 88%; top: 50px; transform: rotate(0deg); animation-delay: 2.2s" width="9" height="9" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8" fill="#C9DDEB" stroke="#4A2C21" stroke-width="1.6"></circle></svg>
 <div class="code">{{day.code}} · {{day.dow}} {{day.date}}</div>
 <h2>{{day.title}}</h2>
 </div>
 
 <div class="sec">
 <div class="box prepbox">
+<svg class="peek" width="54" height="34" viewBox="0 0 64 40" aria-hidden="true"><path d="M6 40 Q4 22 12 16 L13 2 L24 11 Q32 8 40 11 L51 2 L52 16 Q60 22 58 40 Z" fill="#FFFDF6" stroke="#4A2C21" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"></path><path d="M13 3 L24 11 Q18 14 13 18 Z" fill="#E9A15E"></path><circle cx="24" cy="26" r="2.1" fill="#4A2C21"></circle><circle cx="40" cy="26" r="2.1" fill="#4A2C21"></circle><path d="M29 30 Q30.5 32.5 32 30 Q33.5 32.5 35 30" fill="none" stroke="#4A2C21" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"></path><ellipse cx="20" cy="30" rx="3" ry="1.8" fill="#F6A5B5"></ellipse><ellipse cx="44" cy="30" rx="3" ry="1.8" fill="#F6A5B5"></ellipse><ellipse cx="18" cy="39" rx="6" ry="4" fill="#FFFDF6" stroke="#4A2C21" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"></ellipse><ellipse cx="46" cy="39" rx="6" ry="4" fill="#FFFDF6" stroke="#4A2C21" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"></ellipse></svg>
 <h3>ก่อนออกจากที่พัก</h3>
 <ul>
 <sc-for list="{{day.prep}}" as="p" hint-placeholder-count="3"><li>{{p}}</li></sc-for>
@@ -199,7 +223,6 @@ a{color:#A8382B}a:hover{color:#7E2519}
 <div class="box">
 <h3>ที่พัก Osaka · 9–12 ธ.ค. (3 คืน)</h3>
 <p><b>Dotonbori Shinsaibashi Hotel</b> · ใกล้ Nippombashi</p>
-<div class="addr jp" style="font-size: 15px; font-weight: 500; color: #4E3168; background: #E6DAF0">[ตรวจสอบ] ใส่ที่อยู่ภาษาญี่ปุ่นสำหรับแท็กซี่</div>
 <dl class="kv">
 <dt>เช็กอิน</dt><dd>15:00</dd>
 <dt>เช็กเอาต์</dt><dd>ก่อน 10:00</dd>
@@ -237,17 +260,18 @@ a{color:#A8382B}a:hover{color:#7E2519}
 
 <sc-if value="{{showMoney}}" hint-placeholder-val="{{false}}">
 <div class="sec">
-<div class="total"><span>รวมทั้งทริป/คน · ไม่รวมช้อปปิ้ง<br>ผู้ชาย ~฿44,900</span><b>ผู้หญิง ~฿45,700</b></div>
+<div class="decoline" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24"><path d="M12 2 L14.6 8.8 L22 9.3 L16.3 14 L18.2 21.2 L12 17.2 L5.8 21.2 L7.7 14 L2 9.3 L9.4 8.8 Z" fill="#F8E7A6" stroke="#4A2C21" stroke-width="1.6" stroke-linejoin="round"></path></svg><svg width="18" height="18" viewBox="0 0 24 24"><path d="M12 12 C8 9 5 6 7.5 3.6 C9.3 2 11.2 3 12 4.6 C12.8 3 14.7 2 16.5 3.6 C19 6 16 9 12 12 Z" transform="rotate(0 12 12)" fill="#9CC97F" stroke="#4A2C21" stroke-width="1.3" stroke-linejoin="round"></path><path d="M12 12 C8 9 5 6 7.5 3.6 C9.3 2 11.2 3 12 4.6 C12.8 3 14.7 2 16.5 3.6 C19 6 16 9 12 12 Z" transform="rotate(90 12 12)" fill="#9CC97F" stroke="#4A2C21" stroke-width="1.3" stroke-linejoin="round"></path><path d="M12 12 C8 9 5 6 7.5 3.6 C9.3 2 11.2 3 12 4.6 C12.8 3 14.7 2 16.5 3.6 C19 6 16 9 12 12 Z" transform="rotate(180 12 12)" fill="#9CC97F" stroke="#4A2C21" stroke-width="1.3" stroke-linejoin="round"></path><path d="M12 12 C8 9 5 6 7.5 3.6 C9.3 2 11.2 3 12 4.6 C12.8 3 14.7 2 16.5 3.6 C19 6 16 9 12 12 Z" transform="rotate(270 12 12)" fill="#9CC97F" stroke="#4A2C21" stroke-width="1.3" stroke-linejoin="round"></path><circle cx="12" cy="12" r="1.4" fill="#4A2C21"></circle></svg><svg width="16" height="16" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#C9DDEB" stroke="#4A2C21" stroke-width="1.6"></circle><circle cx="12" cy="12" r="7" fill="none" stroke="#4A2C21" stroke-width="1" opacity=".45"></circle><circle cx="9.6" cy="9.6" r="1.3" fill="#4A2C21"></circle><circle cx="14.4" cy="9.6" r="1.3" fill="#4A2C21"></circle><circle cx="9.6" cy="14.4" r="1.3" fill="#4A2C21"></circle><circle cx="14.4" cy="14.4" r="1.3" fill="#4A2C21"></circle></svg><svg width="10" height="10" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" fill="#F6C9D6" stroke="#4A2C21" stroke-width="1.6"></circle></svg><svg width="14" height="14" viewBox="0 0 24 24"><path d="M12 2 L14.6 8.8 L22 9.3 L16.3 14 L18.2 21.2 L12 17.2 L5.8 21.2 L7.7 14 L2 9.3 L9.4 8.8 Z" fill="#F6C9D6" stroke="#4A2C21" stroke-width="1.6" stroke-linejoin="round"></path></svg><svg width="16" height="16" viewBox="0 0 24 24"><path d="M12 12 C8 9 5 6 7.5 3.6 C9.3 2 11.2 3 12 4.6 C12.8 3 14.7 2 16.5 3.6 C19 6 16 9 12 12 Z" transform="rotate(0 12 12)" fill="#9CC97F" stroke="#4A2C21" stroke-width="1.3" stroke-linejoin="round"></path><path d="M12 12 C8 9 5 6 7.5 3.6 C9.3 2 11.2 3 12 4.6 C12.8 3 14.7 2 16.5 3.6 C19 6 16 9 12 12 Z" transform="rotate(90 12 12)" fill="#9CC97F" stroke="#4A2C21" stroke-width="1.3" stroke-linejoin="round"></path><path d="M12 12 C8 9 5 6 7.5 3.6 C9.3 2 11.2 3 12 4.6 C12.8 3 14.7 2 16.5 3.6 C19 6 16 9 12 12 Z" transform="rotate(180 12 12)" fill="#9CC97F" stroke="#4A2C21" stroke-width="1.3" stroke-linejoin="round"></path><path d="M12 12 C8 9 5 6 7.5 3.6 C9.3 2 11.2 3 12 4.6 C12.8 3 14.7 2 16.5 3.6 C19 6 16 9 12 12 Z" transform="rotate(270 12 12)" fill="#9CC97F" stroke="#4A2C21" stroke-width="1.3" stroke-linejoin="round"></path><circle cx="12" cy="12" r="1.4" fill="#4A2C21"></circle></svg><svg width="15" height="15" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#F8E7A6" stroke="#4A2C21" stroke-width="1.6"></circle><circle cx="12" cy="12" r="7" fill="none" stroke="#4A2C21" stroke-width="1" opacity=".45"></circle><circle cx="9.6" cy="9.6" r="1.3" fill="#4A2C21"></circle><circle cx="14.4" cy="9.6" r="1.3" fill="#4A2C21"></circle><circle cx="9.6" cy="14.4" r="1.3" fill="#4A2C21"></circle><circle cx="14.4" cy="14.4" r="1.3" fill="#4A2C21"></circle></svg><svg width="10" height="10" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" fill="#C9DDEB" stroke="#4A2C21" stroke-width="1.6"></circle></svg><svg width="16" height="16" viewBox="0 0 24 24"><path d="M12 2 L14.6 8.8 L22 9.3 L16.3 14 L18.2 21.2 L12 17.2 L5.8 21.2 L7.7 14 L2 9.3 L9.4 8.8 Z" fill="#FFFDF6" stroke="#4A2C21" stroke-width="1.6" stroke-linejoin="round"></path></svg></div>
+<div class="total"><span>รวมทั้งทริป/คน · ไม่รวมช้อปปิ้ง<br>ผู้ชาย ~฿44,500</span><b>ผู้หญิง ~฿45,300</b></div>
 
 <div class="box">
 <h3>ภาพรวมค่าใช้จ่ายต่อคน</h3>
 <table class="tbl">
 <tr><th>ส่วน</th><th class="num">ผู้หญิง</th><th class="num">ผู้ชาย</th></tr>
 <tr><td>1. จองล่วงหน้า</td><td class="num">฿27,665</td><td class="num">฿26,851</td></tr>
-<tr><td>2. ระหว่างทริป ไม่รวมค่ากิน</td><td class="num">฿8,215</td><td class="num">฿8,215</td></tr>
-<tr><td><b>รวม ไม่รวมค่ากิน</b></td><td class="num"><b>฿35,880</b></td><td class="num"><b>฿35,066</b></td></tr>
+<tr><td>2. ระหว่างทริป ไม่รวมค่ากิน</td><td class="num">฿7,836</td><td class="num">฿7,836</td></tr>
+<tr><td><b>รวม ไม่รวมค่ากิน</b></td><td class="num"><b>฿35,501</b></td><td class="num"><b>฿34,687</b></td></tr>
 <tr><td>3. ค่ากิน</td><td class="num">฿9,823</td><td class="num">฿9,823</td></tr>
-<tr><td><b>รวมทั้งหมด</b></td><td class="num"><b>~฿45,700</b></td><td class="num"><b>~฿44,900</b></td></tr>
+<tr><td><b>รวมทั้งหมด</b></td><td class="num"><b>~฿45,300</b></td><td class="num"><b>~฿44,500</b></td></tr>
 </table>
 <p style="font-size: 13px; color: #6B5446">¥1 ≈ ฿0.22 · ราคาต่อคน · ไม่รวมช้อปปิ้งและของฝาก</p>
 </div>
@@ -256,12 +280,12 @@ a{color:#A8382B}a:hover{color:#7E2519}
 <h3>1. จองล่วงหน้า</h3>
 <table class="tbl">
 <tr><th>รายการ</th><th class="num">ต่อคน</th></tr>
-<tr><td>✈️ ตั๋วเครื่องบิน HX ไป-กลับ (D4 / D12)</td><td class="num">฿16,829.51</td></tr>
-<tr><td>🏨 ที่พัก Kyoto 5 คืน (D4–D9)</td><td class="num">฿5,209.07</td></tr>
-<tr><td>🏨 ที่พัก Osaka 3 คืน (D9–D12)</td><td class="num">~฿3,200</td></tr>
-<tr><td>🎨 teamLab (D4 19:00)</td><td class="num">฿953.10</td></tr>
-<tr><td>🖼️ Yusai-tei (D5 11:30)</td><td class="num">฿659.22</td></tr>
-<tr><td>👘 กิโมโน Miyabi (D7 · ผู้หญิง)</td><td class="num">฿813.77</td></tr>
+<tr><td>ตั๋วเครื่องบิน HX ไป-กลับ (D4 / D12)</td><td class="num">฿16,829.51</td></tr>
+<tr><td>ที่พัก Kyoto 5 คืน (D4–D9)</td><td class="num">฿5,209.07</td></tr>
+<tr><td>ที่พัก Osaka 3 คืน (D9–D12)</td><td class="num">~฿3,200</td></tr>
+<tr><td>teamLab (D4 19:00)</td><td class="num">฿953.10</td></tr>
+<tr><td>Yusai-tei (D5 11:30)</td><td class="num">฿659.22</td></tr>
+<tr><td>กิโมโน Miyabi (D7 · ผู้หญิง)</td><td class="num">฿813.77</td></tr>
 <tr><td><b>รวม</b></td><td class="num"><b>฿27,665 / ฿26,851</b></td></tr>
 </table>
 <p style="font-size: 13px; color: #6B5446">ผู้หญิง / ผู้ชาย · Hakuryu-en และ Rurikoin จองแล้วแต่จ่ายหน้างาน (อยู่ในตารางที่ 2)</p>
@@ -271,18 +295,18 @@ a{color:#A8382B}a:hover{color:#7E2519}
 <h3>2. ระหว่างทริป ไม่รวมค่ากิน</h3>
 <table class="tbl">
 <tr><th>วัน</th><th>รายการหลัก</th><th class="num">ต่อคน</th></tr>
-<tr><td>D4</td><td>Haruka · ICOCA มัดจำ · รถบัส · รถไฟ</td><td class="num">¥4,620<br>(฿1,016)</td></tr>
+<tr><td>D4</td><td>Haruka ¥2,700 (ออนไลน์) · ICOCA มัดจำ · รถบัส · รถไฟ</td><td class="num">¥3,870<br>(฿851)</td></tr>
 <tr><td>D5</td><td>JR · Randen · JR Bus · Hankyu</td><td class="num">¥1,360<br>(฿299)</td></tr>
-<tr><td>D6</td><td>Hakuryu-en ¥1,600 · Rurikoin ~¥2,000 [ตรวจสอบ] · Eizan · รถบัส</td><td class="num">¥5,430<br>(฿1,195)</td></tr>
+<tr><td>D6</td><td>Hakuryu-en ¥1,600 · Rurikoin ¥2,000 · Eizan · รถบัส</td><td class="num">¥5,370<br>(฿1,181)</td></tr>
 <tr><td>D7</td><td>Kiyomizu ¥500 · รถบัส · JR Uji</td><td class="num">¥1,760<br>(฿387)</td></tr>
 <tr><td>D8</td><td>บัส Tankai ไป-กลับ ~¥7,300 · รถเมล์ Ine · เรือ · จักรยาน</td><td class="num">¥9,900<br>(฿2,178)</td></tr>
-<tr><td>D9</td><td>Kintetsu · ecbo ~¥1,500 · Todai-ji · Kaiyukan ~¥3,100</td><td class="num">¥8,370<br>(฿1,841)</td></tr>
+<tr><td>D9</td><td>Kintetsu · ecbo ¥1,300 · Todai-ji · Kaiyukan ¥2,700</td><td class="num">¥7,770<br>(฿1,709)</td></tr>
 <tr><td>D10</td><td>Subway</td><td class="num">¥480<br>(฿106)</td></tr>
-<tr><td>D11</td><td>Hankyu · รถบัส Katsuo-ji · ค่าเข้าวัด · ชิงช้าสวรรค์ [ตรวจสอบ]</td><td class="num">¥4,450<br>(฿979)</td></tr>
+<tr><td>D11</td><td>Subway ¥770 × 2 · รถบัส Katsuo-ji ¥800 × 2 · ค่าเข้าวัด ¥500 · ดารุมะ ¥500</td><td class="num">¥4,140<br>(฿911)</td></tr>
 <tr><td>D12</td><td>Nankai ไปสนามบิน</td><td class="num">¥970<br>(฿213)</td></tr>
-<tr><td></td><td><b>รวม</b></td><td class="num"><b>¥37,340<br>(฿8,215)</b></td></tr>
+<tr><td></td><td><b>รวม</b></td><td class="num"><b>¥35,620<br>(฿7,836)</b></td></tr>
 </table>
-<p style="font-size: 13px; color: #6B5446">ค่าเดินทาง ¥23,590 · ค่าเข้า/กิจกรรม ¥11,750 · อื่นๆ ¥2,000 · ICOCA มัดจำ ¥500 ได้คืนตอนคืนบัตร</p>
+<p style="font-size: 13px; color: #6B5446">ค่าเดินทาง ¥23,720 · ค่าเข้า/กิจกรรม ¥10,100 · อื่นๆ ¥1,800 · ICOCA มัดจำ ¥500 ได้คืนตอนคืนบัตร</p>
 </div>
 
 <div class="box">
@@ -295,7 +319,7 @@ a{color:#A8382B}a:hover{color:#7E2519}
 <tr><td>D7</td><td>เช้า FamilyMart ¥600 · สตรีทฟู้ด Kiyomizu ¥800 · โซบะ Uji ¥1,500 · ขนมมัทฉะ ¥1,300 · เย็นสถานี Kyoto ¥1,500</td><td class="num">¥5,700<br>(฿1,254)</td></tr>
 <tr><td>D8</td><td>เช้า 7-Eleven ¥600 · Nagisa ¥2,000 · INE CAFE ¥700 · ราเมง ¥1,200</td><td class="num">¥4,500<br>(฿990)</td></tr>
 <tr><td>D9</td><td>เช้า 7-Eleven ¥600 · กลางวัน Nara ¥1,700 · Dotonbori ¥2,000</td><td class="num">¥4,300<br>(฿946)</td></tr>
-<tr><td>D10</td><td>Kuromon ¥2,000 · กลางวัน ¥1,000 · Christmas Marche ¥800 · 🥩 Yakiniku Nishiki ~¥6,000</td><td class="num">¥9,800<br>(฿2,156)</td></tr>
+<tr><td>D10</td><td>Kuromon ¥2,000 · กลางวัน ¥1,000 · Christmas Marche ¥800 ·  Yakiniku Nishiki ~¥6,000</td><td class="num">¥9,800<br>(฿2,156)</td></tr>
 <tr><td>D11</td><td>เช้า ¥600 · กลางวัน Namba ¥1,200 · สตรีทฟู้ด ¥1,000 · เย็น Ura-Namba ¥2,000</td><td class="num">¥4,800<br>(฿1,056)</td></tr>
 <tr><td>D12</td><td>เช้า ¥800 · กลางวันสนามบิน ¥1,500</td><td class="num">¥2,300<br>(฿506)</td></tr>
 <tr><td></td><td><b>รวม</b> (เฉลี่ย ~¥5,000/วัน)</td><td class="num"><b>¥44,650<br>(฿9,823)</b></td></tr>
@@ -306,15 +330,16 @@ a{color:#A8382B}a:hover{color:#7E2519}
 <div class="box">
 <h3>ยังต้องจองก่อนไป</h3>
 <ul>
-<li>🚌 รถบัสไฮเวย์ Tankai ไป-กลับ (D8 08:20 / 17:10) · จองออนไลน์ลด 2% · ขึ้นรถป้าย C2</li>
-<li>🧳 ecbo cloak (D9 Nara 09:15–14:00 · 10 ใบ)</li>
+<li>รถบัสไฮเวย์ Tankai ไป-กลับ (D8 08:20 / 17:10) · จองออนไลน์ลด 2% · ขึ้นรถป้าย C2</li>
+<li>ecbo cloak (D9 · 7-Eleven Nara Prefectural Office · ใหญ่ 5 + เล็ก 5 · 09:00–14:00)</li>
+<li>ตั๋ว Haruka ลดราคา ¥2,700 (D4 · ซื้อออนไลน์ก่อนบิน · ใช้ชื่อและเลขพาสปอร์ตทุกคน)</li>
 </ul>
 </div>
 
 <div class="box">
 <h3>สิ่งที่ต้องติดตาม</h3>
 <ul>
-<li>เช็ก: ค่าเข้า Rurikoin · เวลาเปิด Kaiyukan เดือนธันวาคม · ตารางรถบัส Katsuo-ji · เวลารถ JR Bus ป้าย Omuro-Ninnaji</li>
+<li>เช็กหน้างาน: ตารางวันเสาร์ JR Bus ขากลับ Makinoo (D5)</li>
 <li>เตรียม: Visit Japan Web · eSIM · ประกัน · เงินเยน ~¥90,000–100,000/คน · เงินสด ¥1,600 พอดีสำหรับ Hakuryu-en</li>
 </ul>
 </div>
@@ -339,7 +364,7 @@ a{color:#A8382B}a:hover{color:#7E2519}
 <h3>ข้อควรระวังทั้งทริป</h3>
 <ul>
 <li><b>เงินสด:</b> Hakuryu-en, ร้านเล็ก, ตลาด, รถเมล์ท้องถิ่น และร้านเช่าจักรยานรับเงินสดเป็นหลัก · Takao, Yase และ Ine ไม่มี ATM → <b>กดเงินจาก 7-Eleven ในเมืองทุกเช้า</b></li>
-<li><b>รถเที่ยวสุดท้าย:</b> D5 JR Bus Takao 17:16 · D8 รถบัสไฮเวย์ 18:00 · D11 รถบัส Katsuo-ji 17:05</li>
+<li><b>รถเที่ยวสุดท้าย:</b> D5 JR Bus Omuro-Ninnaji 14:52 · ขากลับ Makinoo 17:10 / 17:40 · D8 รถบัสไฮเวย์ 18:00 · D11 รถบัส Katsuo-ji 17:05</li>
 <li><b>อากาศ:</b> ธันวาคมหนาว ฝั่ง Ine / Amanohashidate ลมแรงและอาจมีหิมะ · เตรียมเสื้อกันหนาว กันลม ถุงมือ ผ้าพันคอ</li>
 <li><b>แผนฝนตก:</b> สวนและวัดส่วนใหญ่ยังไปได้ · Hakuryu-en และเรือชมอ่าว Ine อาจงด · ถนนช้อปปิ้งส่วนใหญ่มีหลังคา · เช็กพยากรณ์อากาศ ~25 พ.ย. และ 1–2 วันก่อนแต่ละวัน</li>
 <li><b>กระเป๋า:</b> โหลด 23 กก. + ถือขึ้นเครื่อง 7 กก. · พกตาชั่งกระเป๋า</li>
@@ -348,7 +373,7 @@ a{color:#A8382B}a:hover{color:#7E2519}
 </div>
 </sc-if>
 
-<footer class="mono" style="padding: 20px 16px 36px; font-size: 11px; color: #6B5446; text-align: center; border-top: 1.5px solid #4A2C21">อัปเดตล่าสุด 7 พ.ย. 2026 · FINAL v7 · ราคาต่อคน · ¥1 ≈ ฿0.22</footer>
+<footer class="mono" style="padding: 20px 16px 36px; font-size: 11px; color: #6B5446; text-align: center; border-top: 1.5px solid #4A2C21"><div class="footcute" aria-hidden="true"><svg class="" width="36" height="42" viewBox="0 0 80 92" aria-hidden="true"><ellipse cx="40" cy="82" rx="34" ry="7" fill="#C9DDEB" stroke="#4A2C21" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"></ellipse><path d="M16 78 L22 36 Q40 30 58 36 L64 78 Q40 85 16 78 Z" fill="#FBE39A" stroke="#4A2C21" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"></path><path d="M22 36 Q40 30 58 36 L57 46 Q52 51 47 45 Q41 52 35 46 Q29 51 23 46 Z" fill="#9B5B2E" stroke="#4A2C21" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"></path><path d="M30 33 Q29 21 40 21 Q51 21 50 33 Q45 36 40 33 Q35 36 30 33 Z" fill="#FFFDF6" stroke="#4A2C21" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"></path><path d="M40 12 Q42 5 48 3" fill="none" stroke="#4A2C21" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"></path><circle cx="40" cy="17" r="5" fill="#E2434B" stroke="#4A2C21" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></circle><circle cx="38.4" cy="15.4" r="1.3" fill="#fff"></circle><circle cx="33" cy="62" r="2.1" fill="#4A2C21"></circle><circle cx="47" cy="62" r="2.1" fill="#4A2C21"></circle><path d="M37 66 Q38.5 68.5 40 66 Q41.5 68.5 43 66" fill="none" stroke="#4A2C21" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"></path><ellipse cx="29" cy="66" rx="3" ry="1.8" fill="#F6A5B5"></ellipse><ellipse cx="51" cy="66" rx="3" ry="1.8" fill="#F6A5B5"></ellipse></svg><svg class="" width="44" height="38" viewBox="0 0 96 80" aria-hidden="true"><path d="M80 58 Q96 52 90 36" fill="none" stroke="#4A2C21" stroke-width="6" stroke-linecap="round"></path><path d="M80 58 Q96 52 90 36" fill="none" stroke="#FFFDF6" stroke-width="2.5" stroke-linecap="round"></path><path d="M14 56 Q12 32 22 26 L24 10 L36 22 Q48 18 60 22 L72 10 L74 26 Q84 32 82 56 Q80 74 48 74 Q16 74 14 56 Z" fill="#FFFDF6" stroke="#4A2C21" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"></path><path d="M24 11 L36 22 Q30 26 24 30 Z" fill="#E9A15E"></path><path d="M62 52 Q70 44 81 50 Q81 64 70 70 Q64 62 62 52 Z" fill="#8E8E93" opacity=".75"></path><path d="M14 56 Q12 32 22 26 L24 10 L36 22 Q48 18 60 22 L72 10 L74 26 Q84 32 82 56 Q80 74 48 74 Q16 74 14 56 Z" fill="none" stroke="#4A2C21" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"></path><circle cx="39" cy="42" r="2.1" fill="#4A2C21"></circle><circle cx="57" cy="42" r="2.1" fill="#4A2C21"></circle><path d="M45 46 Q46.5 48.5 48 46 Q49.5 48.5 51 46" fill="none" stroke="#4A2C21" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"></path><ellipse cx="35" cy="46" rx="3" ry="1.8" fill="#F6A5B5"></ellipse><ellipse cx="61" cy="46" rx="3" ry="1.8" fill="#F6A5B5"></ellipse><path d="M18 44 L8 42 M18 49 L8 51 M78 44 L88 42 M78 49 L88 51" stroke="#4A2C21" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"></path></svg></div>อัปเดตล่าสุด 7 พ.ย. 2026 · FINAL v8 · ราคาต่อคน · ¥1 ≈ ฿0.22</footer>
 </div>
 </template>
 <div id="app"></div>
@@ -369,7 +394,7 @@ function __proc(node,sc,parent){
   var el=node.namespaceURI==='http://www.w3.org/1999/xhtml'?document.createElement(node.localName):document.createElementNS(node.namespaceURI,node.localName);
   for(var i=0;i<node.attributes.length;i++){var a=node.attributes[i];
     if(a.name==='onclick'){var fk=__whole(a.value);var fn=fk&&__get(fk,sc);if(typeof fn==='function')el.addEventListener('click',fn);continue;}
-    el.setAttribute(a.name,__interp(a.value,sc));}
+    var v=__interp(a.value,sc);if(['disabled','checked','selected','hidden'].indexOf(a.name)>=0){if(v&&v!=='false')el.setAttribute(a.name,'');continue;}el.setAttribute(a.name,v);}
   var kids=node.tagName.toLowerCase()==='template'?node.content.childNodes:node.childNodes;
   kids.forEach(function(c){__proc(c,sc,el);});
   parent.appendChild(el);
@@ -386,14 +411,14 @@ function I(t, title, note, how, cost, flags, q) {
 
 function tripDays() {
   return [
-    { code: 'D4', dow: 'ศ.', date: '4 ธ.ค.', iso: '2026-12-04', title: 'ถึงญี่ปุ่น → Teramachi → teamLab', total: '~¥7,820 (~฿1,720)', totalNote: 'ไม่รวมกิน ¥4,620 · ค่ากิน ¥3,200',
-      prep: ['พาสปอร์ต + ใบจองที่พัก', 'เงินเยนสำหรับ ICOCA ¥2,000 และตั๋ว Haruka', 'เปิด eSIM ที่สนามบิน'],
-      warn: ['แลกเงินเยนก่อนบิน หรือกดจาก ATM 7-Eleven / Seven Bank ที่ KIX', 'ตั๋ว Haruka ราคาพิเศษ (¥2,700) ซื้อในญี่ปุ่นไม่ได้ ที่ KIX จะได้ราคาปกติ', 'ทางเลือก: JR Kansai Airport Rapid → เปลี่ยนที่ Osaka → Kyoto (ถูกกว่า แต่ช้ากว่าและต้องเปลี่ยนรถ)'],
+    { code: 'D4', dow: 'ศ.', date: '4 ธ.ค.', iso: '2026-12-04', title: 'ถึงญี่ปุ่น → Teramachi → teamLab', total: '~¥7,070 (~฿1,555)', totalNote: 'ไม่รวมกิน ¥3,870 · ค่ากิน ¥3,200',
+      prep: ['พาสปอร์ต + ใบจองที่พัก', 'QR ตั๋ว Haruka (ซื้อออนไลน์) + เงินเยนสำหรับ ICOCA ¥2,000', 'เปิด eSIM ที่สนามบิน'],
+      warn: ['แลกเงินเยนก่อนบิน หรือกดจาก ATM 7-Eleven / Seven Bank ที่ KIX', 'ตั๋ว Haruka ราคาพิเศษ (¥2,700) ต้องซื้อก่อนเข้าญี่ปุ่น · ถ้าลืมซื้อ ที่ KIX ราคาปกติ ¥3,170', 'ทางเลือก: JR Kansai Airport Rapid → เปลี่ยนที่ Osaka → Kyoto (ถูกกว่า แต่ช้ากว่าและต้องเปลี่ยนรถ)'],
       extra: [],
       items: [
         I('13:15', 'ถึง KIX (HX614)', '', '', '', 'k'),
-        I('13:15–14:15', 'ผ่าน ตม. รับกระเป๋า · ซื้อตั๋ว Haruka และ ICOCA', 'ที่ JR Ticket Office · เปิด eSIM', 'เดิน', 'ICOCA ¥2,000 (รวมมัดจำ ¥500)', 'k'),
-        I('14:15–15:35', 'Haruka KIX → Kyoto Station', 'รถไฟด่วนตรง ไม่ต้องเปลี่ยนรถ', 'รถไฟ ~80 น.', '~¥3,300–3,600 (ราคาปกติ)', 'kv'),
+        I('13:15–14:15', 'ผ่าน ตม. รับกระเป๋า · รับตั๋ว Haruka และซื้อ ICOCA', 'ตั๋ว Haruka ซื้อออนไลน์ไว้แล้ว: สแกน QR ที่ตู้ JR สีเขียว + แสดงพาสปอร์ต · เปิด eSIM', 'เดิน', 'ICOCA ¥2,000 (รวมมัดจำ ¥500)', 'k'),
+        I('14:15–15:35', 'Haruka KIX → Kyoto Station', 'รถไฟด่วนตรง ไม่ต้องเปลี่ยนรถ · ตั๋วลดราคาสำหรับต่างชาติ ซื้อออนไลน์ก่อนบิน', 'รถไฟ ~80 น.', '¥2,700 (฿594)', 'pk'),
         I('15:35–16:00', 'ไปที่พัก', 'ขึ้นรถที่ Kyoto Bus Terminal หน้าสถานี (ฝั่ง Karasuma)', 'City Bus 9 หรือ 28 → 西本願寺前 (~5 น.) + เดิน ~5 น.', '¥230 (฿51)', 'v'),
         I('16:00–16:30', 'Self check-in วางกระเป๋า พัก', 'Excellence Inn Nishihonganji', '', '', 'k', '京都府京都市下京区堺町96'),
         I('16:30–16:50', 'ไป Shijo', '', 'เดิน 8 น. → Subway Gojo → Shijo (3 น.) + เดิน 5 น.', '¥220 (฿48)', ''),
@@ -406,8 +431,8 @@ function tripDays() {
         I('22:15–22:30', '7-Eleven ซื้อของใช้และมื้อเช้า แล้วกลับที่พัก', '', 'เดิน', '~¥500 (฿110)', '')
       ] },
     { code: 'D5', dow: 'ส.', date: '5 ธ.ค.', iso: '2026-12-05', title: 'Arashiyama → Yusai-tei → Takao → ช้อปปิ้ง Kawaramachi', total: '~¥6,260 (~฿1,377)', totalNote: 'ไม่รวมกิน ¥1,360 · ค่ากิน ¥4,900',
-      prep: ['กดเงินสดใช้ทั้งวันที่ 7-Eleven (ใน Takao ไม่มี ATM)', 'ไฟฉายมือถือ (ทางไปป้ายรถตอนเย็นมืด)', 'JR Bus เที่ยวสุดท้าย 17:16 ที่ป้าย Makinoo'],
-      warn: ['√2 ปิด 17:00 · กินมื้อกลางวันก่อน แล้วค่อยเดินเล่นริมลำธาร', 'JR Bus จาก Omuro-Ninnaji อาจมี 1–2 คันต่อชั่วโมง [ตรวจสอบ]', 'ใน Takao ไม่มี ATM [ตรวจสอบ]', 'JR Bus 17:16 เป็นเที่ยวสุดท้ายช่วงเย็น', 'ทางไปป้ายรถเริ่มมืด เปิดไฟฉายมือถือ'],
+      prep: ['กดเงินสดใช้ทั้งวันที่ 7-Eleven (ใน Takao ไม่มี ATM)', 'ไฟฉายมือถือ (ทางไปป้ายรถตอนเย็นมืด)', 'JR Bus ขากลับ 17:10 (สำรอง 17:40) ที่ป้าย Makinoo', 'กินของว่างที่ Arashiyama ไว้ก่อน (มื้อกลางวันช้า 15:15)'],
+      warn: ['√2 ปิด 17:00 · กินมื้อกลางวันก่อน แล้วค่อยเดินเล่นริมลำธาร', 'JR Bus วันเสาร์จาก Omuro-Ninnaji มีแค่ 13:32 และ 14:52 · ห้ามพลาดรอบ 14:52', 'ช่วงใบไม้แดงอาจมีรถเสริม (臨時便) และรถอาจช้าเพราะรถติด', 'ใน Takao ไม่มี ATM', 'รถขากลับวันเสาร์ 17:10 / 17:40 / 18:00 · ช่วงใบไม้แดงรถอาจช้า 20–45 น.', 'ทางไปป้ายรถเริ่มมืด เปิดไฟฉายมือถือ'],
       extra: [],
       items: [
         I('08:00–08:10', '7-Eleven', 'ซื้อมื้อเช้า กดเงินสดใช้ทั้งวัน', 'เดิน 2 น.', '~¥600 (฿132)', 'c'),
@@ -417,19 +442,20 @@ function tripDays() {
         I('10:00–11:15', 'สะพาน Togetsukyo + ริมแม่น้ำ + ถนนหลัก Arashiyama', 'ชมใบไม้แดง · ซื้อของว่างรองท้อง', 'เดิน 10 น.', '~¥800 (฿176)', 'k', 'Togetsukyo Bridge'),
         I('11:15–11:30', 'เดินเลียบแม่น้ำไป Yusai-tei', '', 'เดิน ~10 น.', '', ''),
         I('11:30–13:30', 'Yusai-tei Gallery', 'รอบเข้า 11:30–12:00 · ช่วงใบไม้สวยที่สุด · บ้านไม้ 150 ปี งานศิลปะผ้าไหม โต๊ะเงาสะท้อนใบไม้แดงกับวิวหุบเขาแม่น้ำ Hozu', '', 'จ่ายแล้ว ¥3,000', 'bkl', 'Yusai-tei Arashiyama'),
-        I('13:30–14:10', 'ไป Omuro-Ninnaji', 'เปลี่ยนสายที่ Katabiranotsuji (สาย Kitano)', 'เดิน 10 น. → Randen Arashiyama → Omuro-Ninnaji (~25 น.)', '¥250 (฿55)', ''),
-        I('14:10–14:45', 'ไป Takao: JR Bus', 'ป้าย 御室仁和寺 → ลงป้าย Makinoo (槇ノ尾)', 'JR Bus ~25–30 น.', '~¥230 (฿51)', 'v'),
-        I('14:45–16:00', 'มื้อกลางวัน + ของหวานที่ √2 Riverside Takao', 'แกงกะหรี่ + ดังโงะ อันมิตสึ ชงมัทฉะลาเต้เอง · วิวลำธาร · ปิด 17:00 · รับบัตร', 'เดิน 3 น.', '~¥2,000 (฿440)', 'k', '√2 Riverside Takao'),
-        I('16:00–17:00', 'เดินเล่นริมลำธาร Kiyotaki', 'ใบไม้แดงริมลำธาร · เดินวนกลับมาทางป้ายรถ', 'เดิน', 'ฟรี', 'k'),
+        I('13:30–14:05', 'ไป Omuro-Ninnaji', 'เปลี่ยนสายที่ Katabiranotsuji (สาย Kitano)', 'เดิน 10 น. → Randen Arashiyama → Omuro-Ninnaji (~25 น.)', '¥250 (฿55)', ''),
+        I('14:05–14:45', 'เดินเล่นลานวัด Ninna-ji (รอรถ)', 'ประตู Niomon · เจดีย์ 5 ชั้น · ลานวัดเข้าฟรี', 'เดิน 3 น.', 'ฟรี', 'k', 'Ninna-ji Temple'),
+        I('14:52–15:15', 'JR Bus เที่ยว 14:52 → Makinoo', 'ป้าย 御室仁和寺 → ลงป้าย 槇ノ尾 · วันเสาร์มีแค่ 13:32 / 14:52 · แตะ ICOCA ได้', 'JR Bus 23 น.', '¥230 (฿51)', 'kl'),
+        I('15:15–16:15', 'มื้อกลางวัน + ของหวานที่ √2 Riverside Takao', 'แกงกะหรี่ + ดังโงะ อันมิตสึ ชงมัทฉะลาเต้เอง · วิวลำธาร · ปิด 17:00 · รับบัตร', 'เดิน 3 น.', '~¥2,000 (฿440)', 'k', '√2 Riverside Takao'),
+        I('16:15–17:00', 'เดินเล่นริมลำธาร Kiyotaki', 'ใบไม้แดงริมลำธาร · เดินวนกลับมาทางป้ายรถ', 'เดิน', 'ฟรี', 'k'),
         I('17:00–17:10', 'เดินไปป้ายรถ Makinoo (槇ノ尾)', '', 'เดิน 3 น.', '', ''),
-        I('~17:14–17:59', 'เข้าเมือง: JR Bus เที่ยว 17:16', 'ถึง Makinoo ก่อนป้าย Takao 1–2 น. → Shijo-Omiya · สำรอง: City Bus สาย 8', 'JR Bus', '¥230 (฿51)', 'kl'),
-        I('18:00–18:10', 'ไป Kawaramachi', '', 'Hankyu: Omiya → Kawaramachi (4 น.)', '¥190 (฿42)', 'v'),
-        I('18:10–19:50', 'ช้อปปิ้ง Shijo-Kawaramachi', 'KIDDY LAND (Sanrio, Chiikawa, Ghibli, Smiski) · Animate Kyoto (ของอนิเมะ) · BOOKOFF PLUS OPA ชั้น 8 (ร้านมือสอง)', 'เดินในโซน', '', 'k', 'KIDDY LAND Kyoto Kawaramachi'),
+        I('17:10–17:46', 'เข้าเมือง: JR Bus เที่ยว 17:10', '→ Shijo-Omiya · สำรอง 17:40 (ถึง 18:16) / 18:00 (ถึง 18:37) · ช่วงใบไม้แดงรถอาจช้า 20–45 น.', 'JR Bus', '¥230 (฿51)', 'kl'),
+        I('17:50–18:00', 'ไป Kawaramachi', '', 'Hankyu: Omiya → Kawaramachi (4 น.)', '¥190 (฿42)', ''),
+        I('18:00–19:50', 'ช้อปปิ้ง Shijo-Kawaramachi', 'ไป KIDDY LAND (Sanrio, Chiikawa, Ghibli, Smiski) และ Animate Kyoto ก่อน · ต่อด้วย BOOKOFF PLUS OPA ชั้น 8 (ร้านมือสอง) · ถ้ารถติดลดเวลาช่วงนี้ได้', 'เดินในโซน', '', 'k', 'KIDDY LAND Kyoto Kawaramachi'),
         I('19:50–20:50', 'มื้อเย็นแถว Kawaramachi', 'เลือกหน้างาน', '', '~¥1,500 (฿330)', ''),
         I('20:50–21:40', 'SURUGA-YA Teramachi + กาชาปอง', 'ร้านมือสองอนิเมะราคาดี · ปิด 22:00', 'เดิน 7 น.', '', 'k', 'Surugaya Kyoto Teramachi'),
         I('21:40–22:10', 'กลับที่พัก', '', 'เดิน 5 น. → Subway Shijo → Gojo + เดิน 10 น.', '¥220 (฿48)', '')
       ] },
-    { code: 'D6', dow: 'อา.', date: '6 ธ.ค.', iso: '2026-12-06', title: 'Hakuryu-en → Rurikoin → Nishiki → Gion', total: '~¥10,580 (~฿2,328)', totalNote: 'ไม่รวมกิน ¥5,430 · ค่ากิน ¥5,150',
+    { code: 'D6', dow: 'อา.', date: '6 ธ.ค.', iso: '2026-12-06', title: 'Hakuryu-en → Rurikoin → Nishiki → Gion', total: '~¥10,520 (~฿2,314)', totalNote: 'ไม่รวมกิน ¥5,370 · ค่ากิน ¥5,150',
       prep: ['เงินสดอย่างน้อย ¥8,000/คน', 'Hakuryu-en ¥1,600 เงินสด (5 คนรวม ¥8,000 แบบพอดี)', 'แถว Yase / Kurama ไม่มีร้านสะดวกซื้อและ ATM'],
       warn: ['Hakuryu-en รับแค่เงินสด · ยกเลิกเสียค่าปรับ · สวนปิดถ้าอากาศไม่ดี', 'แถว Yase / Kurama ไม่มีร้านสะดวกซื้อและ ATM', '6 ธ.ค. เป็นวันสุดท้ายของช่วงใบไม้แดง คนน่าจะเยอะ'],
       extra: [],
@@ -438,13 +464,13 @@ function tripDays() {
         I('08:35–08:55', 'ต่อคิว Demachi Futaba', 'ซื้อโมจิถั่ว mame-mochi', '', '¥250 (฿55)', 'kc', 'Demachi Futaba Kyoto'),
         I('08:55–09:05', 'Onigiriyasan', 'ซื้อโอนิกิริไว้กินมื้อเช้าและมื้อกลางวัน', 'เดิน 3 น.', '¥900 (฿198)', ''),
         I('09:05–09:25', 'Kamo Delta', 'นั่งกินมื้อเช้าริมแม่น้ำ', 'เดิน 5 น.', '', ''),
-        I('09:30–09:55', 'ไป Hakuryu-en', '', 'Eizan สาย Kurama → Ninose (~25 น.) + เดิน 5 น.', '¥470 (฿103)', 'v'),
+        I('09:30–09:55', 'ไป Hakuryu-en', '', 'Eizan สาย Kurama → Ninose (~25 น.) + เดิน 5 น.', '¥390 (฿86) · Ninose ไม่มีเจ้าหน้าที่ แตะ ICOCA ที่ตู้บนชานชาลา/บนรถ', ''),
         I('10:00–12:00', 'Hakuryu-en', 'สวนส่วนตัวบนภูเขา มอสเขียวตัดกับใบไม้แดง · อยู่เต็มรอบ 2 ชม.', '', '¥1,600 (฿352) เงินสดหน้างาน', 'bkcl', 'Hakuryuen Kyoto'),
-        I('12:00–12:35', 'ไป Yase', '', 'เดิน 5 น. → Eizan เปลี่ยนรถที่ Takaragaike → Yase-Hieizanguchi (~18 น.)', '¥370 (฿81)', 'v'),
+        I('12:00–12:35', 'ไป Yase', '', 'เดิน 5 น. → Eizan เปลี่ยนรถที่ Takaragaike → Yase-Hieizanguchi (~18 น.)', '¥390 (฿86) · ไม่ต้องออกประตูที่ Takaragaike', ''),
         I('12:35–13:30', 'มื้อกลางวันแบบปิกนิก', 'กินโอนิกิริริมแม่น้ำ Takano แถวสถานี Yase', 'เดิน 2 น.', '', ''),
         I('13:30–13:40', 'เดินไป Rurikoin', '', 'เดิน 5–10 น.', '', ''),
-        I('13:40–15:10', 'Rurikoin', 'รอบ 13:40 · โต๊ะไม้เงาวาวสะท้อนใบไม้แดง · สวนมอส · ช่วงบ่ายคนน้อยกว่า', '', '~¥2,000 (฿440) [ตรวจสอบ ราคาและการจ่าย]', 'bkl', 'Rurikoin Kyoto'),
-        I('15:10–15:50', 'กลับเข้าเมือง', '', 'เดิน 5 น. → Eizan → Demachiyanagi (~14 น.) → Keihan → Gion-Shijo (~5 น.) + เดิน 10 น.', '¥500 (฿110)', 'v'),
+        I('13:40–15:10', 'Rurikoin', 'รอบ 13:40 · โต๊ะไม้เงาวาวสะท้อนใบไม้แดง · สวนมอส · ช่วงบ่ายคนน้อยกว่า', '', '¥2,000 (฿440)', 'bkl', 'Rurikoin Kyoto'),
+        I('15:10–15:50', 'กลับเข้าเมือง', '', 'เดิน 5 น. → Eizan → Demachiyanagi (~14 น.) → Keihan → Gion-Shijo (~6 น.) + เดิน 10 น.', 'Eizan ¥270 + Keihan ¥230 (฿110)', ''),
         I('15:50–17:00', 'Nishiki Market', 'ตลาดอาหารเก่าแก่ ตระเวนกินสตรีทฟู้ด · ร้านเริ่มปิดราว 17:00–18:00', '', '~¥2,000 (฿440)', 'kc', 'Nishiki Market Kyoto'),
         I('17:00–18:15', 'Gion', 'Hanamikoji · คลอง Shirakawa · ศาลเจ้า Yasaka ตอนเปิดไฟ', 'เดิน 15 น.', 'ฟรี', 'k', 'Hanamikoji Street Gion'),
         I('18:30–20:00', 'มื้อเย็นแถว Gion', 'เลือกหน้างาน (ไม่ใช่เนื้อ): อุด้ง ราเมง ข้าวหน้าไก่', 'เดิน 3–10 น.', '~¥2,000 (฿440)', 'k'),
@@ -474,25 +500,25 @@ function tripDays() {
       ] },
     { code: 'D8', dow: 'อ.', date: '8 ธ.ค.', iso: '2026-12-08', title: 'Ine หมู่บ้านเรือนแพ → ปั่นจักรยาน Amanohashidate', total: '~¥14,400 (~฿3,168)', totalNote: 'ไม่รวมกิน ¥9,900 · ค่ากิน ¥4,500',
       prep: ['ออกจากที่พัก 07:50 · รถบัสไฮเวย์ 08:20', 'เงินสด (Ine ไม่มีร้านสะดวกซื้อ ร้านส่วนใหญ่รับแค่เงินสด)', 'เสื้อกันหนาว กันลม ถุงมือ ผ้าพันคอ'],
-      warn: ['ฝั่งทะเลญี่ปุ่นหนาวและลมแรง อาจมีหิมะ', 'เรือชมอ่าวงดถ้าอากาศไม่ดี', 'ใน Ine ไม่มีร้านสะดวกซื้อ · ร้านส่วนใหญ่รับแค่เงินสด', 'รถเมล์ Ine อาจไม่รับ ICOCA [ตรวจสอบ]'],
-      extra: [{ h: 'ตารางรถบัสไฮเวย์ Tankai (ฉบับ 1 ต.ค. 2026)', lines: ['Kyoto → Amanohashidate: 07:20 · 08:20 · 09:00 · 12:55 · 16:20 · 18:20', 'Amanohashidate → Kyoto: 07:35 · 09:20 · 13:20 · 16:20 · 17:10 · 18:00 (เที่ยวสุดท้าย)', 'จอง: Hassha Oline (ลด 2%) หรือโทร 0772-42-0321 · ป้ายขึ้นรถที่ Kyoto Station [ตรวจสอบ]'] }],
+      warn: ['ฝั่งทะเลญี่ปุ่นหนาวและลมแรง อาจมีหิมะ', 'เรือชมอ่าวงดถ้าอากาศไม่ดี', 'ใน Ine ไม่มีร้านสะดวกซื้อ · ร้านส่วนใหญ่รับแค่เงินสด', 'รถเมล์ Ine ใช้ ICOCA ไม่ได้ · เตรียมเงินสด ¥800 หรือบัตรเครดิตแตะจ่าย', 'รถเมล์ขากลับจาก Ine 15:04 ห้ามพลาด · ถ้ารถช้า ปั่นจักรยานสั้นลงหรือข้าม แล้วไปขึ้นรถบัส 17:10 / 18:00'],
+      extra: [{ h: 'ตารางรถบัสไฮเวย์ Tankai (ฉบับ 1 ต.ค. 2026)', lines: ['Kyoto → Amanohashidate: 07:20 · 08:20 · 09:00 · 12:55 · 16:20 · 18:20', 'Amanohashidate → Kyoto: 07:35 · 09:20 · 13:20 · 16:20 · 17:10 · 18:00 (เที่ยวสุดท้าย)', 'จอง: Hassha Oline (ลด 2%) หรือโทร 0772-42-0321 · ขึ้นรถที่ Kyoto Station ป้าย C2 (ฝั่ง Karasuma)'] }],
       items: [
         I('07:40–07:50', '7-Eleven', 'มื้อเช้าไว้กินบนรถ กดเงินสด ซื้อน้ำและขนม', 'เดิน 2 น.', '~¥600 (฿132)', 'c'),
-        I('07:50–08:10', 'ไปป้ายรถบัสไฮเวย์ Kyoto Station', '', 'เดิน 15 น.', '', 'v'),
+        I('07:50–08:10', 'ไปป้ายรถบัสไฮเวย์ Kyoto Station ป้าย C2', 'ฝั่ง Karasuma (ฝั่ง Kyoto Tower) แถวหน้าสุดติดถนน Shiokoji ใกล้ Bus Information Center', 'เดิน 15 น.', '', ''),
         I('08:20–10:25', 'รถบัสไฮเวย์ Tankai → Amanohashidate Station', 'แนะนำให้จองล่วงหน้า', 'รถ ~2 ชม.', '¥3,400–3,900 (฿748–858)', 'pkl'),
-        I('10:58–11:53', 'รถเมล์สาย Ine → ป้าย Ine-wan Meguri / Hide', 'อาจไม่รับ ICOCA', 'รถ 55 น.', '¥400 (฿88)', 'kclv'),
+        I('10:58–11:55', 'รถเมล์สาย Ine → ป้าย Ine-wan Meguri / Hide', 'ใช้ ICOCA ไม่ได้ · จ่ายเงินสด หรือแตะบัตรเครดิต Visa/Mastercard / PayPay · ถ้าไม่ทันเรือ 12:00 ขึ้นรอบ 12:30', 'รถ ~55 น.', '¥400 (฿88)', 'kcl'),
         I('12:00–12:25', 'เรือชมอ่าว Ine', 'ชมบ้านเรือนแพจากทะเล ให้อาหารนกนางนวล · ออกทุก :00 / :30', 'เดิน 2 น.', '¥1,200 + ขนมนก ¥100 (฿286)', 'kc', 'Ine Bay Cruise'),
         I('12:45–13:45', 'Nagisa (walk-in)', 'ข้าวหน้าทูน่า ปลาสด ปลาบุริเข้าฤดู · ปิด 14:00 · สำรอง: INE CAFE, Wadatsumi', 'เดิน 15 น.', '~¥2,000 (฿440)', 'kcv'),
-        I('13:45–14:35', 'เดินเล่นหมู่บ้านเรือนแพ + INE CAFE หรือ hakuzu coffee stand', 'นั่งชิลวิวอ่าว มัทฉะลาเต้', 'เดิน', '~¥700 (฿154)', 'k', 'INE CAFE Kyoto'),
-        I('14:42–15:42', 'รถเมล์สาย Ine → Amanohashidate Station', 'วิ่งเฉพาะวันธรรมดา · สำรอง 15:08', 'รถ 60 น.', '¥400 (฿88)', 'kcl'),
-        I('15:45–15:55', 'เช่าจักรยานที่ Chiekurabe (walk-in)', 'ห่างสถานี 2–3 น. · สำรอง: ร้านหลังวัด Chion-ji หรือเดินแทน', 'เดิน', '~¥500 (฿110)', 'cv'),
-        I('15:55–16:50', 'ปั่นจักรยานบนสันทราย Amanohashidate', 'ข้ามสะพานหมุน ปั่นใต้ต้นสนกลางทะเล ชมพระอาทิตย์ตก ~16:45', 'ปั่น', '', 'k', 'Amanohashidate'),
-        I('16:50–17:05', 'คืนจักรยาน → สถานี', '', 'เดิน', '', ''),
+        I('13:45–14:55', 'เดินเล่นหมู่บ้านเรือนแพ + INE CAFE หรือ hakuzu coffee stand', 'นั่งชิลวิวอ่าว มัทฉะลาเต้', 'เดิน', '~¥700 (฿154)', 'k', 'INE CAFE Kyoto'),
+        I('15:04–~16:04', 'รถเมล์สาย Ine → Amanohashidate Station', 'จากป้าย 伊根湾めぐり・日出 · เงินสดหรือบัตรเครดิต · ห้ามพลาดรอบนี้', 'รถ ~60 น.', '¥400 (฿88)', 'kcl'),
+        I('16:04–16:10', 'เช่าจักรยานที่ Chiekurabe (walk-in)', 'ห่างสถานี 2–3 น. · ¥500 / 2 ชม. · ต้องคืนก่อน 17:00 · ปิดวันศุกร์', 'เดิน', '¥500 (฿110)', 'cl'),
+        I('16:10–16:55', 'ปั่นจักรยานบนสันทราย Amanohashidate (1 รอบ)', 'สันทรายยาว ~3.6 กม. · ปั่นไป-กลับ ~40 น. แวะถ่ายรูป 1–2 จุด · ข้ามสะพานหมุน · พระอาทิตย์ตก ~16:45', 'ปั่น', '', 'k', 'Amanohashidate'),
+        I('16:55–17:05', 'คืนจักรยาน (ก่อน 17:00) → ป้ายรถบัส', '', 'เดิน', '', 'l'),
         I('17:10–19:20', 'รถบัสไฮเวย์ Tankai → Kyoto Station', 'สำรอง: เที่ยวสุดท้าย 18:00 → 20:10', 'รถ ~2 ชม.', '¥3,400–3,900 (฿748–858)', 'kl'),
         I('19:30–20:30', 'มื้อเย็น Kyoto Ramen Koji หรือ AEON MALL KYOTO', '', 'เดิน 5 น.', '~¥1,200 (฿264)', ''),
         I('20:30–20:45', 'กลับที่พัก แพ็กกระเป๋า', 'พรุ่งนี้ย้ายไป Osaka', 'เดิน 15 น.', '', '')
       ] },
-    { code: 'D9', dow: 'พ.', date: '9 ธ.ค.', iso: '2026-12-09', title: 'Kyoto → Nara → Osaka → Kaiyukan → Dotonbori', total: '~¥12,670 (~฿2,787)', totalNote: 'ไม่รวมกิน ¥8,370 · ค่ากิน ¥4,300',
+    { code: 'D9', dow: 'พ.', date: '9 ธ.ค.', iso: '2026-12-09', title: 'Kyoto → Nara → Osaka → Kaiyukan → Dotonbori', total: '~¥12,070 (~฿2,655)', totalNote: 'ไม่รวมกิน ¥7,770 · ค่ากิน ¥4,300',
       prep: ['แพ็กกระเป๋าครบ · เช็กเอาต์ 07:35 · ขึ้นรถบัส 07:50', 'ecbo cloak ฝากกระเป๋าที่ Nara 09:15–14:00', 'เงินสดค่าขนมกวางและของกิน'],
       warn: ['โรงแรม Osaka ไม่รับฝากกระเป๋าก่อน 15:00', 'ecbo cloak อาจต้องแยกฝากหลายจุด', 'กวางอาจดึงถุงกระดาษ', 'ถ้าไปถึงโรงแรมเร็ว ใช้ตู้ล็อกเกอร์สถานี Nippombashi / Namba'],
       extra: [],
@@ -500,18 +526,18 @@ function tripDays() {
         I('07:20–07:35', '7-Eleven', 'มื้อเช้า กดเงินสด', 'เดิน 2 น.', '~¥600 (฿132)', 'c'),
         I('07:35–07:50', 'เช็กเอาต์ Excellence Inn', '', '', '', 'kl'),
         I('07:50–08:20', 'ไป Kyoto Station ฝั่ง Kintetsu', 'ลงหน้าสถานี แล้วเดินผ่านสถานีไปฝั่ง Hachijo', 'City Bus 9 หรือ 28 (~10 น.) + เดิน ~7 น.', '¥230 (฿51)', 'lv'),
-        I('08:30–09:05', 'Kintetsu Limited Express Kyoto → Kintetsu-Nara', 'ที่นั่งระบุ มีที่วางกระเป๋า · ซื้อที่สถานี', 'รถไฟ ~35 น.', '~¥760 + ~¥520 (฿282)', 'kv'),
-        I('09:05–09:25', 'ฝากกระเป๋าที่ ecbo cloak', 'ใบใหญ่ 5 + ใบเล็ก 5', 'เดิน ~5 น.', '~¥1,500 (฿330)', 'pkv'),
+        I('08:30–09:05', 'Kintetsu Limited Express Kyoto → Kintetsu-Nara', 'ที่นั่งระบุ มีที่วางกระเป๋า · ซื้อที่สถานี', 'รถไฟ ~35 น.', '¥1,280 (฿282) · ¥760 + ตั๋ว Limited Express ¥520 · ซื้อที่สถานีก่อนรถออก 15–30 น.', 'k'),
+        I('09:05–09:25', 'ฝากกระเป๋าที่ ecbo cloak: 7-Eleven Nara Prefectural Office (奈良県庁)', 'ใบใหญ่ 5 + ใบเล็ก 5 · ใหญ่ ¥800 เล็ก ¥500 · เปิด 07:00–21:30 · อยู่ทางไป Nara Park', 'เดิน ~6 น.', '¥1,300 (฿286)', 'pk', '7-Eleven Nara Kencho'),
         I('09:25–10:30', 'Nara Park', 'ให้อาหารกวาง ถ่ายรูปกวางก้มหัว', 'เดิน 10 น.', 'ขนมกวาง ~¥200 (฿44)', 'kc', 'Nara Park'),
         I('10:30–11:30', 'Todai-ji', 'พระใหญ่ Daibutsu ในอาคารไม้ขนาดใหญ่ · ลอดรูเสา · เปิด 08:00–17:00', 'เดิน 15 น.', '¥800 (฿176)', 'k', 'Todai-ji'),
         I('11:30–12:30', 'ทางเดินป่าไปศาลเจ้า Kasuga Taisha', 'ป่าดึกดำบรรพ์ โคมหินกว่า 2,000 ต้น', 'เดิน 20 น.', 'ฟรี', 'k', 'Kasuga Taisha'),
         I('12:30–13:45', 'มื้อกลางวันย่าน Higashimuki / Sanjo-dori + Nakatanidou', 'โชว์ตำโมจิเร็ว', 'เดิน 20 น.', '~¥1,700 (฿374)', 'k', 'Nakatanidou Nara'),
-        I('13:45–14:00', 'รับกระเป๋าคืน', '', 'เดิน 5 น.', '', 'l'),
-        I('14:05–14:45', 'Kintetsu Rapid Express Kintetsu-Nara → Kintetsu-Nippombashi', '', 'รถไฟ ~40 น.', '~¥680 (฿150)', 'v'),
+        I('13:40–14:00', 'รับกระเป๋าคืน (7-Eleven Nara Prefectural Office)', 'เดินไป-กลับ ~12 น. · ถ้าไม่ทันรถ 14:05 ขึ้นรอบถัดไปได้', 'เดิน 6 น.', '', 'l'),
+        I('14:05–14:45', 'Kintetsu Rapid Express Kintetsu-Nara → Kintetsu-Nippombashi', '', 'รถไฟ ~40 น.', '¥680 (฿150) · แตะ ICOCA ได้เลย', ''),
         I('14:45–15:00', 'เดินไปโรงแรม', '', 'เดิน ~10 น.', '', ''),
         I('15:00–16:30', 'เช็กอิน Dotonbori Shinsaibashi Hotel และพักผ่อน', '', '', '', 'k', 'Dotonbori Shinsaibashi Hotel'),
         I('16:30–17:00', 'ไป Kaiyukan', '', 'Subway Sakaisuji → Sakaisuji-Hommachi → สาย Chuo → Osakako (~25 น.) + เดิน', '¥290 (฿64)', 'v'),
-        I('17:00–19:00', 'Kaiyukan รอบยามค่ำคืน (夜の海遊館)', 'ซื้อหน้างาน · ฉลามวาฬ · ปรับแสงเป็นทะเลยามค่ำคืน · เข้าครั้งสุดท้าย 19:00', '', '~¥2,700–3,500 (฿594–770)', 'kv', 'Osaka Aquarium Kaiyukan'),
+        I('17:00–19:00', 'Kaiyukan รอบยามค่ำคืน (夜の海遊館)', 'ฉลามวาฬ · ไฟโทนกลางคืนตั้งแต่ 17:00 · เปิดถึง 20:00 เข้าครั้งสุดท้าย 19:00 · ซื้อหน้างานได้ แต่แนะนำจองรอบเวลาออนไลน์ (เปิดขาย 30 วันก่อน)', '', '¥2,700 (฿594) · ราคาวันธรรมดา', 'k', 'Osaka Aquarium Kaiyukan'),
         I('19:00–19:30', 'กลับ Namba', '', 'สาย Chuo → Hommachi → สาย Midosuji → Namba', '¥290 (฿64)', ''),
         I('19:30–21:00', 'Dotonbori', 'ทาโกะยากิ โอโคโนมิยากิ คุชิคัตสึ · ป้าย Glico', 'เดิน 5 น.', '~¥2,000 (฿440)', 'k', 'Dotonbori'),
         I('21:00–21:15', 'กลับที่พัก', '', 'เดิน ~10 น.', '', '')
@@ -533,23 +559,23 @@ function tripDays() {
         I('21:00–22:15', 'Don Quijote Namba Sennichimae', 'ขนม ยา เครื่องสำอาง ของฝาก', 'เดิน ~10 น.', '', 'k', 'Don Quijote Namba Sennichimae'),
         I('22:15–22:30', 'กลับที่พัก', '', 'เดิน ~10 น.', '', '')
       ] },
-    { code: 'D11', dow: 'ศ.', date: '11 ธ.ค.', iso: '2026-12-11', title: 'Katsuo-ji (วัดดารุมะ) → Namba → Dotonbori → Hozenji → Ura-Namba', total: '~¥9,250 (~฿2,035)', totalNote: 'ไม่รวมกิน ¥4,450 · ค่ากิน ¥4,800',
-      prep: ['ออกจากที่พักไม่ช้ากว่า 08:10', 'เสื้อหนาว (วัดอยู่บนเขา หนาวกว่าในเมือง)', 'เงินสดค่ารถบัสและดารุมะ'],
-      warn: ['ไม่ควรออกจากที่พักช้ากว่า 08:10', 'รถไฟสาย Midosuji ช่วงเช้าวันศุกร์คนแน่น', 'วัดอยู่บนเขา อากาศหนาวกว่าในเมือง', 'คืนนี้แพ็กกระเป๋า: น้ำหนักต้องไม่เกิน 23 + 7 กก.'],
-      extra: [{ h: 'ตารางรถบัส Hankyu สาย 30 (วันธรรมดา · จากรูปฉบับ 21 เม.ย. 2025) [ตรวจสอบ]', lines: ['Minoh-Kayano → Katsuo-ji: 9:00 · 9:30 · 10:00 … ทุก 30 นาที ถึง 15:00', 'Katsuo-ji → Minoh-Kayano: 11:20 · 11:25 · 11:50 · 12:20 · 12:50 · … · 17:05 (เที่ยวสุดท้าย)'] }],
+    { code: 'D11', dow: 'ศ.', date: '11 ธ.ค.', iso: '2026-12-11', title: 'Katsuo-ji (วัดดารุมะ) → Namba → Dotonbori → Hozenji → Ura-Namba', total: '~¥8,940 (~฿1,967)', totalNote: 'ไม่รวมกิน ¥4,140 · ค่ากิน ¥4,800',
+      prep: ['ออกจากที่พักไม่ช้ากว่า 08:10', 'เสื้อหนาว (วัดอยู่บนเขา หนาวกว่าในเมือง)', 'เติม ICOCA ให้มีอย่างน้อย ¥3,200 (รถไฟ ¥1,540 + รถบัสสาย 30 ¥1,600 · รถบัสไม่รับเงินสด)'],
+      warn: ['รถบัสสาย 30 ไม่รับเงินสดตั้งแต่ 1 ต.ค. 2026 และเติมเงินบนรถไม่ได้ · ใช้ ICOCA หรือซื้อตั๋วด้วยบัตรเครดิตที่ชานชาลา', 'วัดปิด 17:00 (เข้าครั้งสุดท้าย 16:30) · พกเหรียญ ¥100 สำหรับตู้เซียมซีดารุมะ', 'ไม่ควรออกจากที่พักช้ากว่า 08:10', 'รถไฟสาย Midosuji ช่วงเช้าวันศุกร์คนแน่น', 'วัดอยู่บนเขา อากาศหนาวกว่าในเมือง', 'คืนนี้แพ็กกระเป๋า: น้ำหนักต้องไม่เกิน 23 + 7 กก.'],
+      extra: [{ h: 'ตารางรถบัส Hankyu สาย 30 (วันธรรมดา · ฉบับ 21 เม.ย. 2025 · ชานชาลา 8)', lines: ['Minoh-Kayano → Katsuo-ji: 9:00 · 9:30 · 10:00 … ทุก 30 นาที ถึง 15:00', 'Katsuo-ji → Minoh-Kayano: 11:20 · 11:25 · 11:50 · 12:20 · 12:50 · … · 17:05 (เที่ยวสุดท้าย)'] }],
       items: [
         I('08:00–08:10', 'ร้านสะดวกซื้อ', 'มื้อเช้าที่กินง่าย และกดเงินสด', 'เดิน', '~¥600 (฿132)', 'c'),
-        I('08:10–09:05', 'ไปสถานี Minoh-Kayano', '', 'Subway สาย Midosuji: Namba → Minoh-Kayano (สายตรง ~45 น.)', '~¥600 (฿132)', 'klv'),
+        I('08:10–09:05', 'ไปสถานี Minoh-Kayano', 'แตะ ICOCA ครั้งเดียว (Osaka Metro + Kitakyu)', 'Subway สาย Midosuji: Namba → Minoh-Kayano (สายตรง ~45 น.)', '¥770 (฿169)', 'kl'),
         I('09:05–09:25', 'นั่งกินมื้อเช้าที่สถานี และหาป้ายรถบัสสาย 30', '', '', '', ''),
-        I('09:30–~09:50', 'Hankyu Bus สาย 30 เที่ยว 9:30 → Katsuo-ji', 'สำรอง 10:00', 'รถ ~20 น.', '~¥500 (฿110)', 'kclv'),
-        I('09:50–12:10', 'Katsuo-ji (วัดดารุมะ)', 'ดารุมะหลายพันตัว · ซื้อดารุมะเขียนคำขอพร · วัดบนเขา', 'เดิน', '~¥1,000–1,500 (฿220–330)', 'kv', 'Katsuo-ji Minoh'),
-        I('12:20–~12:40', 'รถบัสเที่ยว 12:20 → Minoh-Kayano', 'สำรอง 12:50', 'รถ ~20 น.', '~¥500 (฿110)', 'kl'),
-        I('12:40–13:30', 'กลับ Namba', '', 'Subway สาย Midosuji (~45 น.)', '~¥600 (฿132)', ''),
+        I('09:30–09:52', 'Hankyu Bus สาย 30 เที่ยว 9:30 → Katsuo-ji', 'ชานชาลา 8 · สำรอง 10:00 · ไม่รับเงินสด แตะ ICOCA', 'รถ ~22 น.', '¥800 (฿176)', 'kl'),
+        I('09:50–12:10', 'Katsuo-ji (วัดดารุมะ)', 'ดารุมะหลายพันตัว · ดารุมะเล็กเขียนคำขอพร ¥500 · ร้านรับบัตรและ ICOCA · วัดบนเขา', 'เดิน', 'ค่าเข้า ¥500 + ดารุมะ ¥500 (฿220)', 'k', 'Katsuo-ji Minoh'),
+        I('12:20–12:41', 'รถบัสเที่ยว 12:20 → Minoh-Kayano', 'สำรอง 12:50 · เที่ยวสุดท้าย 17:05', 'รถ ~21 น.', '¥800 (฿176)', 'kl'),
+        I('12:40–13:30', 'กลับ Namba', '', 'Subway สาย Midosuji (~45 น.)', '¥770 (฿169)', ''),
         I('13:30–14:15', 'มื้อกลางวันแถว Namba', 'เลือกหน้างาน', 'เดิน', '~¥1,200 (฿264)', ''),
         I('14:15–14:45', 'Namba Yasaka Shrine', 'เวทีหัวสิงโตยักษ์ · เข้าฟรี', 'เดิน ~10 น.', 'ฟรี', 'k', 'Namba Yasaka Shrine'),
         I('15:00–16:45', 'Dotonbori', 'ป้าย Glico · สตรีทฟู้ด · เดินเล่นริมคลอง', 'เดิน ~15 น.', '~¥1,000 (฿220)', 'k', 'Dotonbori'),
         I('16:45–17:15', 'Hozenji Temple + Hozenji Yokocho', 'สาดน้ำขอพรรูปปั้นมอส Mizukake Fudo · ซอยหินตอนโคมไฟเปิด', 'เดิน 3 น.', 'ฟรี', 'k', 'Hozenji Temple Osaka'),
-        I('17:15–19:30', 'เดินเที่ยวและช้อปปิ้งย่าน Dotonbori / Namba', 'ร้านของฝาก ของจุ๊กจิ๊ก ร้านขายยา · Don Quijote Dotonbori และชิงช้าสวรรค์ Ebisu Tower ตามสะดวก', 'เดิน', 'ชิงช้าสวรรค์ ~¥1,000 [ตรวจสอบ]', 'k'),
+        I('17:15–19:30', 'เดินเที่ยวและช้อปปิ้งย่าน Dotonbori / Namba', 'ร้านของฝาก ของจุ๊กจิ๊ก ร้านขายยา · Don Quijote Dotonbori', 'เดิน', '', 'k'),
         I('19:30–20:45', 'มื้อเย็นที่ Ura-Namba', 'ซอยร้านกินดื่มของคนท้องถิ่น · เลือกหน้างาน', 'เดิน ~5 น.', '~¥2,000 (฿440)', 'k', 'Ura Namba Osaka'),
         I('20:45–21:00', 'กลับที่พัก', '', 'เดิน ~5–10 น.', '', ''),
         I('21:00–', 'แพ็กกระเป๋า', 'ชั่งน้ำหนัก แยกของ Tax-free และใบเสร็จ', '', '', 'k')
@@ -563,7 +589,7 @@ function tripDays() {
         I('08:30–09:15', 'จัดกระเป๋ารอบสุดท้าย', 'แยกของ Tax-free และใบเสร็จไว้ด้านบน · ชั่งน้ำหนัก', '', '', ''),
         I('09:15–09:30', 'เช็กเอาต์ (ก่อน 10:00)', '', '', '', 'kl'),
         I('09:30–09:50', 'ไปสถานี Nankai Namba', '', 'เดิน 10–15 น.', 'ฟรี', ''),
-        I('10:05–10:50', 'Nankai Namba → Kansai Airport', 'Airport Express หรือ rapi:t ซื้อหน้างาน', 'รถไฟ ~40–45 น.', '~¥970 (฿213) · rapi:t +¥520', 'kv'),
+        I('10:05–10:50', 'Nankai Namba → Kansai Airport', 'Airport Express หรือ rapi:t ซื้อหน้างาน', 'รถไฟ ~40–45 น.', '¥970 (฿213) · rapi:t +¥520', 'k'),
         I('11:00–11:45', 'เคาน์เตอร์ศุลกากร Tax-free', 'แสดงพาสปอร์ต ของ และใบเสร็จ · ทำก่อนโหลดกระเป๋า', '', '', 'kl'),
         I('11:45–12:30', 'เช็กอิน HX615 + โหลดกระเป๋า', '', '', '', 'k'),
         I('12:30–13:00', 'ผ่าน ตม. และจุดตรวจความปลอดภัย', '', '', '', ''),
@@ -573,6 +599,9 @@ function tripDays() {
   ];
 }
 
+var DAY_EMO = { D4: '', D5: '', D6: '', D7: '', D8: '', D9: '', D10: '', D11: '', D12: '' };
+var EMO = [[/HX6|ขึ้นเครื่อง|ตม\./, ''], [/Tax-free/, ''], [/ecbo|รับกระเป๋า|แพ็กกระเป๋า|จัดกระเป๋า/, ''], [/^กลับที่พัก|เช็กอิน|เช็กเอาต์|check-in|ไปที่พัก|ไปโรงแรม/i, ''], [/7-Eleven|FamilyMart|ร้านสะดวกซื้อ/, ''], [/teamLab/, ''], [/Kaiyukan/, ''], [/Yakiniku/, ''], [/ราเมง|Kairikiya|Ramen/, ''], [/Christmas/, ''], [/กิโมโน|Kimono|คืนชุด/, ''], [/จักรยาน/, ''], [/มื้อเช้า/, ''], [/รถบัส|JR Bus|Bus|รถเมล์/, ''], [/^(ไป|กลับ)/, ''], [/Haruka|Kintetsu|Nankai|รถไฟ|Subway|Randen|Eizan|Hankyu:/, ''], [/Nara Park/, ''], [/ป่าไผ่/, ''], [/Katsuo-ji/, ''], [/Kamo Delta/, ''], [/หมู่บ้าน/, ''], [/เรือ/, ''], [/จักรยาน/, ''], [/ของหวาน|โมจิ|Futaba|CAFE|ขนม|Surugaya/, ''], [/Onigiri|มื้อ|Nagisa|ตลาด|Kuromon|Nishiki/, ''], [/Fushimi|Inari|Kasuga|Yasaka|Shrine/, ''], [/Kiyomizu|Todai-ji|Hozenji|Ninna-ji|Temple|วัด/, ''], [/Hakuryu|Rurikoin|Yusai|Kameyama|ลำธาร|สันทราย|Togetsukyo|สะพาน|Uji/, ''], [/ช้อปปิ้ง|Den Den|Shinsaibashi|Umeda|Don Quijote|SURUGA|Teramachi|Dotonbori/, ''], [/Gion|เดิน/, '']];
+function emoOf(t) { for (var i = 0; i < EMO.length; i++) { if (EMO[i][0].test(t)) return EMO[i][1]; } return ''; }
 var TAG_ORDER = ['p', 'b', 'c', 'l', 'v'];
 var TAG_LABEL = { p: 'ยังต้องจอง', b: 'จองแล้ว', c: 'เงินสด', l: 'ห้ามพลาดเวลา', v: '[ตรวจสอบ]' };
 
@@ -599,6 +628,7 @@ class Component extends DCLogic {
     this.timer = setInterval(function () { self.setState({ now: Date.now() }); }, 60000);
   }
   componentWillUnmount() { clearInterval(this.timer); }
+  toDay() { setTimeout(function () { var el = document.querySelector('.dayhead'); if (el) el.scrollIntoView({ block: 'start', behavior: 'smooth' }); }, 30); }
 
   renderVals() {
     var self = this;
@@ -642,7 +672,7 @@ class Component extends DCLogic {
       var cls = i === nowIdx ? 'now' : (i === nextIdx ? 'next' : (key ? '' : 'minor'));
       return {
         tA: parts[0], tB: parts.length > 1 && parts[1] ? parts[1] : '',
-        title: it.title, note: it.note, how: it.how, cost: it.cost,
+        title: it.title, emo: emoOf(it.title), note: it.note, how: it.how, cost: it.cost,
         tags: tags, hasTags: tags.length > 0, cls: cls,
         map: it.q ? 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(it.q) : ''
       };
@@ -650,7 +680,7 @@ class Component extends DCLogic {
 
     var chips = D.map(function (d, i) {
       var cls = (i === di ? 'on' : '') + (i === todayIdx ? ' today' : '');
-      return { code: d.code, sub: d.dow + ' ' + d.date.replace(' ธ.ค.', ''), cls: cls, pick: function () { self.setState({ day: i, tab: 'days' }); } };
+      return { code: d.code, emo: DAY_EMO[d.code] || '', sub: d.dow + ' ' + d.date.replace(' ธ.ค.', ''), cls: cls, pick: function () { self.setState({ day: i, tab: 'days' }); } };
     });
 
     var tabDefs = [['days', 'แผนรายวัน'], ['info', 'ข้อมูลหลัก'], ['money', 'ค่าใช้จ่าย'], ['tips', 'ข้อควรระวัง']];
@@ -663,6 +693,7 @@ class Component extends DCLogic {
       tabs: tabs,
       chips: chips,
       day: day,
+      dayEmo: DAY_EMO[day.code] || '',
       items: items,
       showDays: this.state.tab === 'days',
       showInfo: this.state.tab === 'info',
@@ -670,8 +701,8 @@ class Component extends DCLogic {
       showTips: this.state.tab === 'tips',
       isFirst: di === 0,
       isLast: di === D.length - 1,
-      prevDay: function () { self.setState({ day: Math.max(0, di - 1) }); },
-      nextDay: function () { self.setState({ day: Math.min(D.length - 1, di + 1) }); }
+      prevDay: function () { self.setState({ day: Math.max(0, di - 1) }); self.toDay(); },
+      nextDay: function () { self.setState({ day: Math.min(D.length - 1, di + 1) }); self.toDay(); }
     };
   }
 }
